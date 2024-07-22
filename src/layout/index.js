@@ -39,8 +39,8 @@ import ChatPopover from "../pages/Chat/ChatPopover";
 import { useDate } from "../hooks/useDate";
 
 import ColorModeContext from "../layout/themeContext";
-import Brightness4Icon from '@material-ui/icons/Brightness4';
-import Brightness7Icon from '@material-ui/icons/Brightness7';
+import Brightness4Icon from "@material-ui/icons/Brightness4";
+import Brightness7Icon from "@material-ui/icons/Brightness7";
 
 const drawerWidth = 240;
 
@@ -52,15 +52,16 @@ const useStyles = makeStyles((theme) => ({
       height: "calc(100vh - 56px)",
     },
     backgroundColor: theme.palette.fancyBackground,
-    '& .MuiButton-outlinedPrimary': {
-      color: theme.mode === 'light' ? '#FFF' : '#FFF',
-	  //backgroundColor: theme.mode === 'light' ? '#682ee2' : '#682ee2',
-	backgroundColor: theme.mode === 'light' ? theme.palette.primary.main : '#1c1c1c',
+    "& .MuiButton-outlinedPrimary": {
+      color: theme.mode === "light" ? "#FFF" : "#FFF",
+      //backgroundColor: theme.mode === 'light' ? '#682ee2' : '#682ee2',
+      backgroundColor:
+        theme.mode === "light" ? theme.palette.primary.main : "#1c1c1c",
       //border: theme.mode === 'light' ? '1px solid rgba(0 124 102)' : '1px solid rgba(255, 255, 255, 0.5)',
     },
-    '& .MuiTab-textColorPrimary.Mui-selected': {
-      color: theme.mode === 'light' ? 'Primary' : '#FFF',
-    }
+    "& .MuiTab-textColorPrimary.Mui-selected": {
+      color: theme.mode === "light" ? "Primary" : "#FFF",
+    },
   },
   avatar: {
     width: "100%",
@@ -77,8 +78,8 @@ const useStyles = makeStyles((theme) => ({
     padding: "0 8px",
     minHeight: "48px",
     [theme.breakpoints.down("sm")]: {
-      height: "48px"
-    }
+      height: "48px",
+    },
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -95,8 +96,8 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
     [theme.breakpoints.down("sm")]: {
-      display: "none"
-    }
+      display: "none",
+    },
   },
   menuButton: {
     marginRight: 36,
@@ -118,9 +119,9 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
     [theme.breakpoints.down("sm")]: {
-      width: "100%"
+      width: "100%",
     },
-    ...theme.scrollbarStylesSoft
+    ...theme.scrollbarStylesSoft,
   },
   drawerPaperClose: {
     overflowX: "hidden",
@@ -133,8 +134,8 @@ const useStyles = makeStyles((theme) => ({
       width: theme.spacing(9),
     },
     [theme.breakpoints.down("sm")]: {
-      width: "100%"
-    }
+      width: "100%",
+    },
   },
   appBarSpacer: {
     minHeight: "48px",
@@ -142,7 +143,6 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flex: 1,
     overflow: "auto",
-
   },
   container: {
     paddingTop: theme.spacing(4),
@@ -152,7 +152,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     display: "flex",
     overflow: "auto",
-    flexDirection: "column"
+    flexDirection: "column",
   },
   containerWithScroll: {
     flex: 1,
@@ -166,13 +166,13 @@ const useStyles = makeStyles((theme) => ({
   logo: {
     width: "80%",
     height: "auto",
-    maxWidth: 180,
+    maxWidth: 150,
     [theme.breakpoints.down("sm")]: {
       width: "auto",
       height: "80%",
-      maxWidth: 180,
+      maxWidth: 150,
     },
-    logo: theme.logo
+    logo: theme.logo,
   },
 }));
 
@@ -194,7 +194,6 @@ const LoggedInLayout = ({ children, themeToggle }) => {
   const [volume, setVolume] = useState(localStorage.getItem("volume") || 1);
 
   const { dateToClient } = useDate();
-
 
   //################### CODIGOS DE TESTE #########################################
   // useEffect(() => {
@@ -314,7 +313,7 @@ const LoggedInLayout = ({ children, themeToggle }) => {
 
   const handleRefreshPage = () => {
     window.location.reload(false);
-  }
+  };
 
   const handleMenuItemClick = () => {
     const { innerWidth: width } = window;
@@ -325,7 +324,7 @@ const LoggedInLayout = ({ children, themeToggle }) => {
 
   const toggleColorMode = () => {
     colorMode.toggleColorMode();
-  }
+  };
 
   if (loading) {
     return <BackdropLoading />;
@@ -388,25 +387,30 @@ const LoggedInLayout = ({ children, themeToggle }) => {
             className={classes.title}
           >
             {/* {greaterThenSm && user?.profile === "admin" && getDateAndDifDays(user?.company?.dueDate).difData < 7 ? ( */}
-            {greaterThenSm && user?.profile === "admin" && user?.company?.dueDate ? (
+            {greaterThenSm &&
+            user?.profile === "admin" &&
+            user?.company?.dueDate ? (
               <>
-                Olá <b>{user.name}</b>, Bem vindo a <b>{user?.company?.name}</b>! (Ativo até {dateToClient(user?.company?.dueDate)})
+                Olá <b>{user.name}</b>, Bem vindo a <b>{user?.company?.name}</b>
+                ! (Ativo até {dateToClient(user?.company?.dueDate)})
               </>
             ) : (
               <>
-                Olá  <b>{user.name}</b>, Bem vindo a <b>{user?.company?.name}</b>!
+                Olá <b>{user.name}</b>, Bem vindo a <b>{user?.company?.name}</b>
+                !
               </>
             )}
           </Typography>
 
           <IconButton edge="start" onClick={toggleColorMode}>
-            {theme.mode === 'dark' ? <Brightness7Icon style={{ color: "white" }} /> : <Brightness4Icon style={{ color: "white" }} />}
+            {theme.mode === "dark" ? (
+              <Brightness7Icon style={{ color: "white" }} />
+            ) : (
+              <Brightness4Icon style={{ color: "white" }} />
+            )}
           </IconButton>
 
-          <NotificationsVolume
-            setVolume={setVolume}
-            volume={volume}
-          />
+          <NotificationsVolume setVolume={setVolume} volume={volume} />
 
           <IconButton
             onClick={handleRefreshPage}
