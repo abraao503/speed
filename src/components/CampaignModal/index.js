@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexWrap: "wrap",
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
   },
 
   tabmsg: {
@@ -134,7 +134,7 @@ const CampaignModal = ({
     (async () => {
       try {
         const { data } = await api.get("/files/", {
-          params: { companyId }
+          params: { companyId },
         });
 
         setFile(data.files);
@@ -160,7 +160,8 @@ const CampaignModal = ({
         .get(`/whatsapp`, { params: { companyId, session: 0 } })
         .then(({ data }) => setWhatsapps(data));
 
-      api.get(`/tags`, { params: { companyId } })
+      api
+        .get(`/tags`, { params: { companyId } })
         .then(({ data }) => {
           const fetchedTags = data.tags;
           // Perform any necessary data transformation here
@@ -173,7 +174,7 @@ const CampaignModal = ({
         .catch((error) => {
           console.error("Error retrieving tags:", error);
         });
-        
+
       if (!campaignId) return;
 
       api.get(`/campaigns/${campaignId}`).then(({ data }) => {
@@ -223,7 +224,7 @@ const CampaignModal = ({
       const dataValues = {};
       Object.entries(values).forEach(([key, value]) => {
         if (key === "scheduledAt" && value !== "" && value !== null) {
-          dataValues[key] = moment(value).format("YYYY-MM-DD HH:mm:ss");
+          dataValues[key] = new Date(value);
         } else {
           dataValues[key] = value === "" ? null : value;
         }
@@ -537,13 +538,15 @@ const CampaignModal = ({
                     />
                   </Grid>
                   <Grid xs={12} md={4} item>
-                  <FormControl
+                    <FormControl
                       variant="outlined"
                       margin="dense"
                       className={classes.FormControl}
                       fullWidth
                     >
-                      <InputLabel id="fileListId-selection-label">{i18n.t("campaigns.dialog.form.fileList")}</InputLabel>
+                      <InputLabel id="fileListId-selection-label">
+                        {i18n.t("campaigns.dialog.form.fileList")}
+                      </InputLabel>
                       <Field
                         as={Select}
                         label={i18n.t("campaigns.dialog.form.fileList")}
@@ -553,8 +556,8 @@ const CampaignModal = ({
                         labelId="fileListId-selection-label"
                         value={values.fileListId || ""}
                       >
-                        <MenuItem value={""} >{"Nenhum"}</MenuItem>
-                        {file.map(f => (
+                        <MenuItem value={""}>{"Nenhum"}</MenuItem>
+                        {file.map((f) => (
                           <MenuItem key={f.id} value={f.id}>
                             {f.name}
                           </MenuItem>
