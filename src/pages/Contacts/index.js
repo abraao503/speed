@@ -2,7 +2,6 @@ import React, { useState, useEffect, useReducer, useContext } from "react";
 
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
-import { Tooltip } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -16,6 +15,8 @@ import WhatsAppIcon from "@material-ui/icons/WhatsApp";
 import SearchIcon from "@material-ui/icons/Search";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 import IconButton from "@material-ui/core/IconButton";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
@@ -36,7 +37,7 @@ import { Can } from "../../components/Can";
 import NewTicketModal from "../../components/NewTicketModal";
 import { SocketContext } from "../../context/Socket/SocketContext";
 
-import {CSVLink} from "react-csv";
+import { CSVLink } from "react-csv";
 
 const reducer = (state, action) => {
   if (action.type === "LOAD_CONTACTS") {
@@ -108,6 +109,7 @@ const Contacts = () => {
   const [deletingContact, setDeletingContact] = useState(null);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [hasMore, setHasMore] = useState(false);
+  const [contactLoading, setContactLoading] = useState(0);
 
   const socketManager = useContext(SocketContext);
 
@@ -153,7 +155,7 @@ const Contacts = () => {
     return () => {
       socket.disconnect();
     };
-  }, [ socketManager]);
+  }, [socketManager]);
 
   const handleSearch = (event) => {
     setSearchParam(event.target.value.toLowerCase());
@@ -167,6 +169,22 @@ const Contacts = () => {
   const handleCloseContactModal = () => {
     setSelectedContactId(null);
     setContactModalOpen(false);
+  };
+
+  const handleGoToTicket = async (contactId) => {
+    try {
+      setContactLoading(contactId);
+      const { data } = await api.get("/tickets/contact/" + contactId);
+      setContactLoading(0);
+
+      history.push(`/tickets/${data.uuid}`);
+    } catch (err) {
+      if (err.response?.status === 404) {
+        toast.error(i18n.t("contacts.toasts.noTicket"));
+      }
+    } finally {
+      setContactLoading(0);
+    }
   };
 
   // const handleSaveTicket = async contactId => {
@@ -296,12 +314,20 @@ const Contacts = () => {
             {i18n.t("contacts.buttons.add")}
           </Button>
 
-         <CSVLink style={{ textDecoration:'none'}} separator=";" filename={'contatos.csv'} data={contacts.map((contact) => ({ name: contact.name, number: contact.number, email: contact.email }))}>
-          <Button	variant="contained" color="primary"> 
-          EXPORTAR CONTATOS 
-          </Button>
-          </CSVLink>		  
-
+          <CSVLink
+            style={{ textDecoration: "none" }}
+            separator=";"
+            filename={"contatos.csv"}
+            data={contacts.map((contact) => ({
+              name: contact.name,
+              number: contact.number,
+              email: contact.email,
+            }))}
+          >
+            <Button variant="contained" color="primary">
+              EXPORTAR CONTATOS
+            </Button>
+          </CSVLink>
         </MainHeaderButtonsWrapper>
       </MainHeader>
       <Paper
@@ -336,15 +362,23 @@ const Contacts = () => {
                   <TableCell align="center">{contact.number}</TableCell>
                   <TableCell align="center">{contact.email}</TableCell>
                   <TableCell align="center">
-                    <IconButton
-                      size="small"
-                      onClick={() => {
-                        setContactTicket(contact);
-                        setNewTicketModalOpen(true);
-                      }}
-                    >
-                      <WhatsAppIcon />
-                    </IconButton>
+                    {contactLoading === contact.id ? (
+                      <CircularProgress
+                        size={20}
+                        sx={{ marginRight: "10px" }}
+                        color="inherit"
+                      />
+                    ) : (
+                      <IconButton
+                        size="small"
+                        onClick={() => {
+                          handleGoToTicket(contact.id);
+                        }}
+                      >
+                        <WhatsAppIcon />
+                      </IconButton>
+                    )}
+
                     <IconButton
                       size="small"
                       onClick={() => hadleEditContact(contact.id)}

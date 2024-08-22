@@ -158,6 +158,7 @@ contacts: {
   toasts: {
     deleted: "Contacto eliminado con éxito!",
     deletedAll: "Todos los contactos eliminados con éxito!",
+    noTicket: "No se encontraron tickets relacionados.",
   },
   searchPlaceholder: "Buscar...",
   confirmationModal: {

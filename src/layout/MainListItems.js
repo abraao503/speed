@@ -26,22 +26,28 @@ import PeopleIcon from "@material-ui/icons/People";
 import ListIcon from "@material-ui/icons/ListAlt";
 import AnnouncementIcon from "@material-ui/icons/Announcement";
 import ForumIcon from "@material-ui/icons/Forum";
-import LocalAtmIcon from '@material-ui/icons/LocalAtm';
+import LocalAtmIcon from "@material-ui/icons/LocalAtm";
 import RotateRight from "@material-ui/icons/RotateRight";
 import { i18n } from "../translate/i18n";
 import { WhatsAppsContext } from "../context/WhatsApp/WhatsAppsContext";
 import { AuthContext } from "../context/Auth/AuthContext";
-import LoyaltyRoundedIcon from '@material-ui/icons/LoyaltyRounded';
+import LoyaltyRoundedIcon from "@material-ui/icons/LoyaltyRounded";
 import { Can } from "../components/Can";
 import { SocketContext } from "../context/Socket/SocketContext";
 import { isArray } from "lodash";
-import TableChartIcon from '@material-ui/icons/TableChart';
+import TableChartIcon from "@material-ui/icons/TableChart";
 import api from "../services/api";
-import BorderColorIcon from '@material-ui/icons/BorderColor';
+import BorderColorIcon from "@material-ui/icons/BorderColor";
 import ToDoList from "../pages/ToDoList/";
 import toastError from "../errors/toastError";
 import { makeStyles } from "@material-ui/core/styles";
-import { AllInclusive, AttachFile, BlurCircular, DeviceHubOutlined, Schedule } from '@material-ui/icons';
+import {
+  AllInclusive,
+  AttachFile,
+  BlurCircular,
+  DeviceHubOutlined,
+  Schedule,
+} from "@material-ui/icons";
 import usePlans from "../hooks/usePlans";
 import Typography from "@material-ui/core/Typography";
 import useVersion from "../hooks/useVersion";
@@ -53,7 +59,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "-10px",
   },
 }));
-
 
 function ListItemLink(props) {
   const { icon, primary, to, className } = props;
@@ -142,21 +147,20 @@ const MainListItems = (props) => {
   const [showCampaigns, setShowCampaigns] = useState(false);
   const [showKanban, setShowKanban] = useState(false);
   const [showOpenAi, setShowOpenAi] = useState(false);
-  const [showIntegrations, setShowIntegrations] = useState(false); const history = useHistory();
+  const [showIntegrations, setShowIntegrations] = useState(false);
+  const history = useHistory();
   const [showSchedules, setShowSchedules] = useState(false);
   const [showInternalChat, setShowInternalChat] = useState(false);
   const [showExternalApi, setShowExternalApi] = useState(false);
-
 
   const [invisible, setInvisible] = useState(true);
   const [pageNumber, setPageNumber] = useState(1);
   const [searchParam] = useState("");
   const [chats, dispatch] = useReducer(reducer, []);
   const { getPlanCompany } = usePlans();
-  
+
   const [version, setVersion] = useState(false);
-  
-  
+
   const { getVersion } = useVersion();
 
   const socketManager = useContext(SocketContext);
@@ -169,7 +173,6 @@ const MainListItems = (props) => {
     fetchVersion();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
- 
 
   useEffect(() => {
     dispatch({ type: "RESET" });
@@ -192,8 +195,6 @@ const MainListItems = (props) => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
@@ -301,23 +302,22 @@ const MainListItems = (props) => {
         primary={i18n.t("mainDrawer.listItems.tickets")}
         icon={<WhatsAppIcon />}
       />
-	  
-	{showKanban && (  
-	  <ListItemLink
-        to="/kanban"
-        primary={i18n.t("Kanban")}
-        icon={<TableChartIcon />}
-      />
-	  )}
 
+      {showKanban && (
+        <ListItemLink
+          to="/kanban"
+          primary={i18n.t("Kanban")}
+          icon={<TableChartIcon />}
+        />
+      )}
 
       <ListItemLink
         to="/quick-messages"
         primary={i18n.t("mainDrawer.listItems.quickMessages")}
         icon={<FlashOnIcon />}
       />
-	  
-	  <ListItemLink
+
+      <ListItemLink
         to="/todolist"
         primary={i18n.t("Tarefas")}
         icon={<BorderColorIcon />}
@@ -369,13 +369,14 @@ const MainListItems = (props) => {
                 position: "relative",
                 fontSize: "17px",
                 textAlign: "left",
-                paddingLeft: 20
+                paddingLeft: 20,
               }}
               inset
-              color="inherit">
+              color="inherit"
+            >
               {i18n.t("mainDrawer.listItems.administration")}
             </ListSubheader>
-			
+
             {showCampaigns && (
               <>
                 <ListItem
@@ -495,23 +496,28 @@ const MainListItems = (props) => {
               primary={i18n.t("mainDrawer.listItems.settings")}
               icon={<SettingsOutlinedIcon />}
             />
-			
-			
-            {!collapsed && <React.Fragment>
-              <Divider />
-              {/* 
+
+            {!collapsed && (
+              <React.Fragment>
+                <Divider />
+                {/* 
               // IMAGEM NO MENU
               <Hidden only={['sm', 'xs']}>
                 <img style={{ width: "100%", padding: "10px" }} src={logo} alt="image" />            
               </Hidden> 
               */}
-              <Typography style={{ fontSize: "12px", padding: "10px", textAlign: "right", fontWeight: "bold" }}>
-                {`6.0.0`}
-
-              </Typography>
-            </React.Fragment>
-            }
-			
+                <Typography
+                  style={{
+                    fontSize: "12px",
+                    padding: "10px",
+                    textAlign: "right",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {`6.0.0`}
+                </Typography>
+              </React.Fragment>
+            )}
           </>
         )}
       />
