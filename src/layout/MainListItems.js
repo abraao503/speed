@@ -284,78 +284,98 @@ const MainListItems = (props) => {
   };
 
   return (
-    <div onClick={drawerClose}>
+    <div>
       <Can
         role={user.profile}
         perform="dashboard:view"
         yes={() => (
-          <ListItemLink
-            to="/"
-            primary="Dashboard"
-            icon={<DashboardOutlinedIcon />}
-          />
+          <div onClick={drawerClose}>
+            <ListItemLink
+              to="/"
+              primary="Dashboard"
+              icon={<DashboardOutlinedIcon />}
+            />
+          </div>
         )}
       />
 
-      <ListItemLink
-        to="/tickets"
-        primary={i18n.t("mainDrawer.listItems.tickets")}
-        icon={<WhatsAppIcon />}
-      />
+      <div onClick={drawerClose}>
+        <ListItemLink
+          to="/tickets"
+          primary={i18n.t("mainDrawer.listItems.tickets")}
+          icon={<WhatsAppIcon />}
+        />
+      </div>
 
       {showKanban && (
-        <ListItemLink
-          to="/kanban"
-          primary={i18n.t("Kanban")}
-          icon={<TableChartIcon />}
-        />
+        <div onClick={drawerClose}>
+          <ListItemLink
+            to="/kanban"
+            primary={i18n.t("Kanban")}
+            icon={<TableChartIcon />}
+          />
+        </div>
       )}
 
-      <ListItemLink
-        to="/quick-messages"
-        primary={i18n.t("mainDrawer.listItems.quickMessages")}
-        icon={<FlashOnIcon />}
-      />
+      <div onClick={drawerClose}>
+        <ListItemLink
+          to="/quick-messages"
+          primary={i18n.t("mainDrawer.listItems.quickMessages")}
+          icon={<FlashOnIcon />}
+        />
+      </div>
 
-      <ListItemLink
-        to="/todolist"
-        primary={i18n.t("Tarefas")}
-        icon={<BorderColorIcon />}
-      />
+      <div onClick={drawerClose}>
+        <ListItemLink
+          to="/todolist"
+          primary={i18n.t("Tarefas")}
+          icon={<BorderColorIcon />}
+        />
+      </div>
 
-      <ListItemLink
-        to="/contacts"
-        primary={i18n.t("mainDrawer.listItems.contacts")}
-        icon={<ContactPhoneOutlinedIcon />}
-      />
+      <div onClick={drawerClose}>
+        <ListItemLink
+          to="/contacts"
+          primary={i18n.t("mainDrawer.listItems.contacts")}
+          icon={<ContactPhoneOutlinedIcon />}
+        />
+      </div>
 
-      <ListItemLink
-        to="/schedules"
-        primary={i18n.t("mainDrawer.listItems.schedules")}
-        icon={<EventIcon />}
-      />
+      <div onClick={drawerClose}>
+        <ListItemLink
+          to="/schedules"
+          primary={i18n.t("mainDrawer.listItems.schedules")}
+          icon={<EventIcon />}
+        />
+      </div>
 
-      <ListItemLink
-        to="/tags"
-        primary={i18n.t("mainDrawer.listItems.tags")}
-        icon={<LocalOfferIcon />}
-      />
+      <div onClick={drawerClose}>
+        <ListItemLink
+          to="/tags"
+          primary={i18n.t("mainDrawer.listItems.tags")}
+          icon={<LocalOfferIcon />}
+        />
+      </div>
 
-      <ListItemLink
-        to="/chats"
-        primary={i18n.t("mainDrawer.listItems.chats")}
-        icon={
-          <Badge color="secondary" variant="dot" invisible={invisible}>
-            <ForumIcon />
-          </Badge>
-        }
-      />
+      <div onClick={drawerClose}>
+        <ListItemLink
+          to="/chats"
+          primary={i18n.t("mainDrawer.listItems.chats")}
+          icon={
+            <Badge color="secondary" variant="dot" invisible={invisible}>
+              <ForumIcon />
+            </Badge>
+          }
+        />
+      </div>
 
-      <ListItemLink
-        to="/helps"
-        primary={i18n.t("mainDrawer.listItems.helps")}
-        icon={<HelpOutlineIcon />}
-      />
+      <div onClick={drawerClose}>
+        <ListItemLink
+          to="/helps"
+          primary={i18n.t("mainDrawer.listItems.helps")}
+          icon={<HelpOutlineIcon />}
+        />
+      </div>
 
       <Can
         role={user.profile}
@@ -402,14 +422,23 @@ const MainListItems = (props) => {
                   unmountOnExit
                 >
                   <List component="div" disablePadding>
-                    <ListItem onClick={() => history.push("/campaigns")} button>
+                    <ListItem
+                      onClick={() => {
+                        drawerClose();
+                        history.push("/campaigns");
+                      }}
+                      button
+                    >
                       <ListItemIcon>
                         <ListIcon />
                       </ListItemIcon>
                       <ListItemText primary="Listagem" />
                     </ListItem>
                     <ListItem
-                      onClick={() => history.push("/contact-lists")}
+                      onClick={() => {
+                        drawerClose();
+                        history.push("/contact-lists");
+                      }}
                       button
                     >
                       <ListItemIcon>
@@ -418,7 +447,10 @@ const MainListItems = (props) => {
                       <ListItemText primary="Listas de Contatos" />
                     </ListItem>
                     <ListItem
-                      onClick={() => history.push("/campaigns-config")}
+                      onClick={() => {
+                        drawerClose();
+                        history.push("/campaigns-config");
+                      }}
                       button
                     >
                       <ListItemIcon>
@@ -431,71 +463,96 @@ const MainListItems = (props) => {
               </>
             )}
             {user.super && (
-              <ListItemLink
-                to="/announcements"
-                primary={i18n.t("mainDrawer.listItems.annoucements")}
-                icon={<AnnouncementIcon />}
-              />
+              <div onClick={drawerClose}>
+                <ListItemLink
+                  to="/announcements"
+                  primary={i18n.t("mainDrawer.listItems.annoucements")}
+                  icon={<AnnouncementIcon />}
+                />
+              </div>
             )}
             {showOpenAi && (
-              <ListItemLink
-                to="/prompts"
-                primary={i18n.t("mainDrawer.listItems.prompts")}
-                icon={<AllInclusive />}
-              />
+              <div onClick={drawerClose}>
+                <ListItemLink
+                  to="/prompts"
+                  primary={i18n.t("mainDrawer.listItems.prompts")}
+                  icon={<AllInclusive />}
+                />
+              </div>
             )}
 
             {showIntegrations && (
-              <ListItemLink
-                to="/queue-integration"
-                primary={i18n.t("mainDrawer.listItems.queueIntegration")}
-                icon={<DeviceHubOutlined />}
-              />
+              <div onClick={drawerClose}>
+                <ListItemLink
+                  to="/queue-integration"
+                  primary={i18n.t("mainDrawer.listItems.queueIntegration")}
+                  icon={<DeviceHubOutlined />}
+                />
+              </div>
             )}
-            <ListItemLink
-              to="/connections"
-              primary={i18n.t("mainDrawer.listItems.connections")}
-              icon={
-                <Badge badgeContent={connectionWarning ? "!" : 0} color="error">
-                  <SyncAltIcon />
-                </Badge>
-              }
-            />
-            <ListItemLink
-              to="/files"
-              primary={i18n.t("mainDrawer.listItems.files")}
-              icon={<AttachFile />}
-            />
-            <ListItemLink
-              to="/queues"
-              primary={i18n.t("mainDrawer.listItems.queues")}
-              icon={<AccountTreeOutlinedIcon />}
-            />
-            <ListItemLink
-              to="/users"
-              primary={i18n.t("mainDrawer.listItems.users")}
-              icon={<PeopleAltOutlinedIcon />}
-            />
+            <div onClick={drawerClose}>
+              <ListItemLink
+                to="/connections"
+                primary={i18n.t("mainDrawer.listItems.connections")}
+                icon={
+                  <Badge
+                    badgeContent={connectionWarning ? "!" : 0}
+                    color="error"
+                  >
+                    <SyncAltIcon />
+                  </Badge>
+                }
+              />
+            </div>
+
+            <div onClick={drawerClose}>
+              <ListItemLink
+                to="/files"
+                primary={i18n.t("mainDrawer.listItems.files")}
+                icon={<AttachFile />}
+              />
+            </div>
+
+            <div onClick={drawerClose}>
+              <ListItemLink
+                to="/queues"
+                primary={i18n.t("mainDrawer.listItems.queues")}
+                icon={<AccountTreeOutlinedIcon />}
+              />
+            </div>
+
+            <div onClick={drawerClose}>
+              <ListItemLink
+                to="/users"
+                primary={i18n.t("mainDrawer.listItems.users")}
+                icon={<PeopleAltOutlinedIcon />}
+              />
+            </div>
             {showExternalApi && (
-              <>
+              <div onClick={drawerClose}>
                 <ListItemLink
                   to="/messages-api"
                   primary={i18n.t("mainDrawer.listItems.messagesAPI")}
                   icon={<CodeRoundedIcon />}
                 />
-              </>
+              </div>
             )}
-            <ListItemLink
-              to="/financeiro"
-              primary={i18n.t("mainDrawer.listItems.financeiro")}
-              icon={<LocalAtmIcon />}
-            />
 
-            <ListItemLink
-              to="/settings"
-              primary={i18n.t("mainDrawer.listItems.settings")}
-              icon={<SettingsOutlinedIcon />}
-            />
+            <div onClick={drawerClose}>
+              <ListItemLink
+                to="/financeiro"
+                primary={i18n.t("mainDrawer.listItems.financeiro")}
+                icon={<LocalAtmIcon />}
+              />
+            </div>
+
+            <div onClick={drawerClose}>
+              <ListItemLink
+                to="/settings"
+                primary={i18n.t("mainDrawer.listItems.settings")}
+                icon={<SettingsOutlinedIcon />}
+              />
+            </div>
 
             {!collapsed && (
               <React.Fragment>
