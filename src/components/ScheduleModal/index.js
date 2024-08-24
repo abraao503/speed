@@ -81,7 +81,7 @@ const ScheduleModal = ({
   const initialState = {
     body: "",
     contactId: "",
-    sendAt: moment().add(1, "hour").format("YYYY-MM-DDTHH:mm"),
+    sendAt: moment().format("YYYY-MM-DDTHH:mm"),
     sentAt: "",
   };
 
