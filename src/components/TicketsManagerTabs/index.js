@@ -12,7 +12,10 @@ import MoveToInboxIcon from "@material-ui/icons/MoveToInbox";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
 import Switch from "@material-ui/core/Switch";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
 
 import NewTicketModal from "../NewTicketModal";
 import TicketsList from "../TicketsListCustom";
@@ -22,121 +25,125 @@ import { i18n } from "../../translate/i18n";
 import { AuthContext } from "../../context/Auth/AuthContext";
 import { Can } from "../Can";
 import TicketsQueueSelect from "../TicketsQueueSelect";
-import { Button } from "@material-ui/core";
+import { Button, MenuItem } from "@material-ui/core";
 import { TagsFilter } from "../TagsFilter";
 import { UsersFilter } from "../UsersFilter";
+import useWhatsApps from "../../hooks/useWhatsApps";
 
-const useStyles = makeStyles(theme => ({
-	ticketsWrapper: {
-		position: "relative",
-		display: "flex",
-		height: "100%",
-		flexDirection: "column",
-		overflow: "hidden",
-		borderTopRightRadius: 0,
-		borderBottomRightRadius: 0,
-		borderRadius:0,
-	},
+const useStyles = makeStyles((theme) => ({
+  ticketsWrapper: {
+    position: "relative",
+    display: "flex",
+    height: "100%",
+    flexDirection: "column",
+    overflow: "hidden",
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
+    borderRadius: 0,
+  },
 
-	tabsHeader: {
-		flex: "none",
-		backgroundColor: theme.palette.tabHeaderBackground,
-	},
+  tabsHeader: {
+    flex: "none",
+    backgroundColor: theme.palette.tabHeaderBackground,
+  },
 
-	tabsInternal: {
-		flex: "none",
-		backgroundColor: theme.palette.tabHeaderBackground
-	},
+  tabsInternal: {
+    flex: "none",
+    backgroundColor: theme.palette.tabHeaderBackground,
+  },
 
-	settingsIcon: {
-		alignSelf: "center",
-		marginLeft: "auto",
-		padding: 8,
-	},
+  settingsIcon: {
+    alignSelf: "center",
+    marginLeft: "auto",
+    padding: 8,
+  },
 
-	tab: {
-		minWidth: 120,
-		width: 120,
-	},
+  tab: {
+    minWidth: 120,
+    width: 120,
+  },
 
-	internalTab: {
-		minWidth: 120,
-		width: 120,
-		padding: 5
-	},
+  internalTab: {
+    minWidth: 120,
+    width: 120,
+    padding: 5,
+  },
 
-	ticketOptionsBox: {
-		display: "flex",
-		justifyContent: "space-between",
-		alignItems: "center",
-		background: theme.palette.optionsBackground,
-		padding: theme.spacing(1),
-	},
+  ticketOptionsBox: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    background: theme.palette.optionsBackground,
+    padding: theme.spacing(1),
+  },
 
-	ticketSearchLine: {
-		padding: theme.spacing(1),
-	},
+  ticketSearchLine: {
+    padding: theme.spacing(1),
+  },
 
-	serachInputWrapper: {
-		flex: 1,
-		background: theme.palette.total,
-		display: "flex",
-		borderRadius: 40,
-		padding: 4,
-		marginRight: theme.spacing(1),
-	},
+  serachInputWrapper: {
+    flex: 1,
+    background: theme.palette.total,
+    display: "flex",
+    borderRadius: 40,
+    padding: 4,
+    marginRight: theme.spacing(1),
+  },
 
-	searchIcon: {
-		color: "grey",
-		marginLeft: 6,
-		marginRight: 6,
-		alignSelf: "center",
-	},
+  searchIcon: {
+    color: "grey",
+    marginLeft: 6,
+    marginRight: 6,
+    alignSelf: "center",
+  },
 
-	searchInput: {
-		flex: 1,
-		border: "none",
-		borderRadius: 30,
-	},
+  searchInput: {
+    flex: 1,
+    border: "none",
+    borderRadius: 30,
+  },
 
-	insiderTabPanel: {
-		height: '100%',
-		marginTop: "-72px",
-		paddingTop: "72px"
-	},
+  insiderTabPanel: {
+    height: "100%",
+    marginTop: "-72px",
+    paddingTop: "72px",
+  },
 
-	insiderDoubleTabPanel: {
-		display:"flex",
-		flexDirection: "column",
-		marginTop: "-72px",
-		paddingTop: "72px",
-		height: "100%"
-	},
+  insiderDoubleTabPanel: {
+    display: "flex",
+    flexDirection: "column",
+    marginTop: "-72px",
+    paddingTop: "72px",
+    height: "100%",
+  },
 
-	labelContainer: {
-		width: "auto",
-		padding: 0
-	},
-	iconLabelWrapper: {
-		flexDirection: "row",
-		'& > *:first-child': {
-			marginBottom: '3px !important',
-			marginRight: 16
-		}
-	},
-	insiderTabLabel: {
-		[theme.breakpoints.down(1600)]: {
-			display:'none'
-		}
-	},
-	smallFormControl: {
-		'& .MuiOutlinedInput-input': {
-			padding: "12px 10px",
-		},
-		'& .MuiInputLabel-outlined': {
-			marginTop: "-6px"
-		}
-	}
+  labelContainer: {
+    width: "auto",
+    padding: 0,
+  },
+  iconLabelWrapper: {
+    flexDirection: "row",
+    "& > *:first-child": {
+      marginBottom: "3px !important",
+      marginRight: 16,
+    },
+  },
+  insiderTabLabel: {
+    [theme.breakpoints.down(1600)]: {
+      display: "none",
+    },
+  },
+  smallFormControl: {
+    "& .MuiOutlinedInput-input": {
+      padding: "12px 10px",
+    },
+    "& .MuiInputLabel-outlined": {
+      marginTop: "-6px",
+    },
+  },
+  formControlContainer: {
+    width: 215,
+  },
 }));
 
 const TicketsManagerTabs = () => {
@@ -159,6 +166,8 @@ const TicketsManagerTabs = () => {
   const [selectedQueueIds, setSelectedQueueIds] = useState(userQueueIds || []);
   const [selectedTags, setSelectedTags] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
+  const [whatsappId, setWhatsappId] = useState(false);
+  const { whatsApps } = useWhatsApps();
 
   useEffect(() => {
     if (user.profile.toUpperCase() === "ADMIN") {
@@ -227,7 +236,6 @@ const TicketsManagerTabs = () => {
       <NewTicketModal
         modalOpen={newTicketModalOpen}
         onClose={(ticket) => {
-          
           handleCloseOrOpenTicket(ticket);
         }}
       />
@@ -261,6 +269,41 @@ const TicketsManagerTabs = () => {
         </Tabs>
       </Paper>
       <Paper square elevation={0} className={classes.ticketOptionsBox}>
+        <Can
+          role={user.profile}
+          perform="user-modal:editProfile"
+          yes={() => (
+            <div className={classes.formControlContainer}>
+              <FormControl variant="outlined" margin="dense" fullWidth>
+                <InputLabel id="whatsappId">
+                  {i18n.t("tickets.filters.selectConnection")}
+                </InputLabel>
+                <Select
+                  value={whatsappId}
+                  onChange={(e) => setWhatsappId(e.target.value)}
+                  labelId="whatsappId"
+                  label={i18n.t("tickets.filters.selectConnection")}
+                >
+                  <MenuItem value={""}>&nbsp;</MenuItem>
+                  {whatsApps.map((whatsapp) => (
+                    <MenuItem key={whatsapp.id} value={whatsapp.id}>
+                      {whatsapp.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
+          )}
+        />
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={() => setNewTicketModalOpen(true)}
+        >
+          {i18n.t("ticketsManager.buttons.newTicket")}
+        </Button>
+      </Paper>
+      <Paper square elevation={0} className={classes.ticketOptionsBox}>
         {tab === "search" ? (
           <div className={classes.serachInputWrapper}>
             <SearchIcon className={classes.searchIcon} />
@@ -274,13 +317,6 @@ const TicketsManagerTabs = () => {
           </div>
         ) : (
           <>
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={() => setNewTicketModalOpen(true)}
-            >
-              {i18n.t("ticketsManager.buttons.newTicket")}
-            </Button>
             <Can
               role={user.profile}
               perform="tickets-manager:showall"
@@ -351,12 +387,14 @@ const TicketsManagerTabs = () => {
             selectedQueueIds={selectedQueueIds}
             updateCount={(val) => setOpenCount(val)}
             style={applyPanelStyle("open")}
+            whatsappId={whatsappId}
           />
           <TicketsList
             status="pending"
             selectedQueueIds={selectedQueueIds}
             updateCount={(val) => setPendingCount(val)}
             style={applyPanelStyle("pending")}
+            whatsappId={whatsappId}
           />
         </Paper>
       </TabPanel>
@@ -365,6 +403,7 @@ const TicketsManagerTabs = () => {
           status="closed"
           showAll={true}
           selectedQueueIds={selectedQueueIds}
+          whatsappId={whatsappId}
         />
       </TabPanel>
       <TabPanel value={tab} name="search" className={classes.ticketsWrapper}>
@@ -378,6 +417,7 @@ const TicketsManagerTabs = () => {
           tags={selectedTags}
           users={selectedUsers}
           selectedQueueIds={selectedQueueIds}
+          whatsappId={whatsappId}
         />
       </TabPanel>
     </Paper>

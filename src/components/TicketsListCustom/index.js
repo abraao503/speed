@@ -163,6 +163,7 @@ const TicketsListCustom = (props) => {
     selectedQueueIds,
     updateCount,
     style,
+    whatsappId,
   } = props;
   const classes = useStyles();
   const [pageNumber, setPageNumber] = useState(1);
@@ -175,7 +176,16 @@ const TicketsListCustom = (props) => {
   useEffect(() => {
     dispatch({ type: "RESET" });
     setPageNumber(1);
-  }, [status, searchParam, dispatch, showAll, tags, users, selectedQueueIds]);
+  }, [
+    status,
+    searchParam,
+    dispatch,
+    showAll,
+    tags,
+    users,
+    selectedQueueIds,
+    whatsappId,
+  ]);
 
   const { tickets, hasMore, loading } = useTickets({
     pageNumber,
@@ -185,6 +195,7 @@ const TicketsListCustom = (props) => {
     tags: JSON.stringify(tags),
     users: JSON.stringify(users),
     queueIds: JSON.stringify(selectedQueueIds),
+    whatsappId,
   });
 
   useEffect(() => {
@@ -220,7 +231,6 @@ const TicketsListCustom = (props) => {
     });
 
     socket.on(`company-${companyId}-ticket`, (data) => {
-      
       if (data.action === "updateUnread") {
         dispatch({
           type: "RESET_UNREAD",
@@ -228,7 +238,11 @@ const TicketsListCustom = (props) => {
         });
       }
 
-      if (data.action === "update" && shouldUpdateTicket(data.ticket) && data.ticket.status === status) {
+      if (
+        data.action === "update" &&
+        shouldUpdateTicket(data.ticket) &&
+        data.ticket.status === status
+      ) {
         dispatch({
           type: "UPDATE_TICKET",
           payload: data.ticket,
@@ -254,7 +268,11 @@ const TicketsListCustom = (props) => {
         return;
       }
 
-      if (data.action === "create" && shouldUpdateTicket(data.ticket) && ( status === undefined || data.ticket.status === status)) {
+      if (
+        data.action === "create" &&
+        shouldUpdateTicket(data.ticket) &&
+        (status === undefined || data.ticket.status === status)
+      ) {
         dispatch({
           type: "UPDATE_TICKET_UNREAD_MESSAGES",
           payload: data.ticket,
@@ -274,7 +292,18 @@ const TicketsListCustom = (props) => {
     return () => {
       socket.disconnect();
     };
-  }, [status, showAll, user, selectedQueueIds, tags, users, profile, queues, socketManager]);
+  }, [
+    status,
+    showAll,
+    user,
+    selectedQueueIds,
+    tags,
+    users,
+    profile,
+    queues,
+    socketManager,
+    whatsappId,
+  ]);
 
   useEffect(() => {
     if (typeof updateCount === "function") {

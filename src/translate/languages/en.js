@@ -217,6 +217,9 @@ const messages = {
         buttons: {
           showAll: "All",
         },
+        filters: {
+          selectConnection: "Select a connection",
+        },
       },
       transferTicketModal: {
         title: "Transfer Ticket",

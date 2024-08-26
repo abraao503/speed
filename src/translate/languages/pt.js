@@ -405,6 +405,9 @@ const messages = {
         buttons: {
           showAll: "Todos",
         },
+        filters: {
+          selectConnection: "Selecione uma conexão",
+        },
       },
       transferTicketModal: {
         title: "Transferir Ticket",

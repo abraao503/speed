@@ -14,6 +14,7 @@ const useTickets = ({
   showAll,
   queueIds,
   withUnreadMessages,
+  whatsappId,
 }) => {
   const [loading, setLoading] = useState(true);
   const [hasMore, setHasMore] = useState(false);
@@ -36,6 +37,7 @@ const useTickets = ({
               showAll,
               queueIds,
               withUnreadMessages,
+              whatsappId,
             },
           });
           setTickets(data.tickets);
@@ -60,6 +62,7 @@ const useTickets = ({
     showAll,
     queueIds,
     withUnreadMessages,
+    whatsappId,
   ]);
 
   return { tickets, loading, hasMore };
