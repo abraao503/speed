@@ -25,27 +25,6 @@ import toastError from "../../errors/toastError";
 
 const useStyles = makeStyles((theme) => ({
 
-  '@global': { // Aplica o estilo globalmente ao componente
-    '*': { // Seleciona todos os elementos
-      fontFamily: [
-        "Inter",
-        "ui-sans-serif",
-        "system-ui",
-        "-apple-system",
-        "BlinkMacSystemFont",
-        "Segoe UI",
-        "Helvetica Neue",
-        "Arial",
-        "Noto Sans",
-        "sans-serif",
-        "Apple Color Emoji",
-        "Segoe UI Emoji",
-        "Segoe UI Symbol",
-        "Noto Color Emoji"
-        ].join(','),
-      }
-  },
-
   ticket: {
     position: "relative"
   },
@@ -65,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
   noTicketsText: {
     textAlign: "center",
-    color: "rgb(104, 121, 146)",
+    color: theme.palette.secondary,
     fontSize: "14px",
     lineHeight: "1.4",
   },
@@ -187,7 +166,7 @@ const TicketListItem = ({ ticket }) => {
           <Avatar src={ticket?.contact?.profilePicUrl} />
         </ListItemAvatar>
         <ListItemText
-          disableTypography
+          
           primary={
             <span className={classes.contactNameWrapper}>
               <Typography

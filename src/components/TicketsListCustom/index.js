@@ -14,6 +14,7 @@ import { SocketContext } from "../../context/Socket/SocketContext";
 
 const useStyles = makeStyles((theme) => ({
   ticketsListWrapper: {
+		fontFamily: "Inter",
     position: "relative",
     display: "flex",
     height: "100%",
@@ -43,14 +44,14 @@ const useStyles = makeStyles((theme) => ({
 
   ticketsCount: {
     fontWeight: "normal",
-    color: "rgb(104, 121, 146)",
+    color: theme.palette.secondary,
     marginLeft: "8px",
     fontSize: "14px",
   },
 
   noTicketsText: {
     textAlign: "center",
-    color: "rgb(104, 121, 146)",
+    color: theme.palette.secondary,
     fontSize: "14px",
     lineHeight: "1.4",
   },
