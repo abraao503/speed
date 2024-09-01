@@ -593,6 +593,7 @@ const MessageInputCustom = (props) => {
         ? `*${user?.name}:*\n${inputMessage.trim()}`
         : inputMessage.trim(),
       quotedMsg: replyingMessage,
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     };
     try {
       await api.post(`/messages/${ticketId}`, message);
