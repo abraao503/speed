@@ -26,6 +26,7 @@ import api from "../../services/api";
 import { isArray } from "lodash";
 import moment from "moment";
 import { SocketContext } from "../../context/Socket/SocketContext";
+import { Bell } from "react-feather";
 
 const useStyles = makeStyles((theme) => ({
   mainPaper: {
@@ -255,7 +256,7 @@ export default function AnnouncementsPopover() {
           variant="dot"
           invisible={invisible || announcements.length < 1}
         >
-          <Notifications />
+          <Bell size={22} />
         </Badge>
       </IconButton>
       <Popover

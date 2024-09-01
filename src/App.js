@@ -31,8 +31,27 @@ const App = () => {
     []
   );
 
-  const theme = createTheme(
-    {
+  const theme = createTheme({
+      typography: {
+        allVariants: {
+          fontFamily: [
+            "Inter",
+            "ui-sans-serif",
+            "system-ui",
+            "-apple-system",
+            "BlinkMacSystemFont",
+            "Segoe UI",
+            "Helvetica Neue",
+            "Arial",
+            "Noto Sans",
+            "sans-serif",
+            "Apple Color Emoji",
+            "Segoe UI Emoji",
+            "Segoe UI Symbol",
+            "Noto Color Emoji"
+            ].join(','),
+        }
+		  },
       scrollbarStyles: {
         "&::-webkit-scrollbar": {
           width: "8px",
@@ -40,7 +59,7 @@ const App = () => {
         },
         "&::-webkit-scrollbar-thumb": {
           boxShadow: "inset 0 0 6px rgba(0, 0, 0, 0.3)",
-          backgroundColor: "#000851",
+          backgroundColor: "#1e2b66",
         },
       },
       scrollbarStylesSoft: {
@@ -53,9 +72,9 @@ const App = () => {
       },
       palette: {
         type: mode,
-        primary: { main: mode === "light" ? "#000851" : "#FFFFFF" },
-        textPrimary: mode === "light" ? "#000851" : "#FFFFFF",
-        borderPrimary: mode === "light" ? "#000851" : "#FFFFFF",
+        primary: { main: mode === "light" ? "#1e2b66" : "#FFFFFF" },
+        textPrimary: mode === "light" ? "#1e2b66" : "#FFFFFF",
+        borderPrimary: mode === "light" ? "#1e2b66" : "#FFFFFF",
         dark: { main: mode === "light" ? "#333333" : "#F3F3F3" },
         light: { main: mode === "light" ? "#F3F3F3" : "#333333" },
         tabHeaderBackground: mode === "light" ? "#EEE" : "#666",
@@ -78,7 +97,7 @@ const App = () => {
         inputBackground: mode === "light" ? "#FFFFFF" : "#333",
         barraSuperior:
           mode === "light"
-            ? "linear-gradient(to right, #000851, #000851 , #000851)"
+            ? "#1e2b66"
             : "#666",
         boxticket: mode === "light" ? "#EEE" : "#666",
         campaigntab: mode === "light" ? "#ededed" : "#666",

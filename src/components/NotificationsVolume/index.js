@@ -8,6 +8,7 @@ import VolumeUpIcon from "@material-ui/icons/VolumeUp";
 import VolumeDownIcon from "@material-ui/icons/VolumeDown";
 
 import { Grid, Slider } from "@material-ui/core";
+import { Volume1, Volume2 } from "react-feather";
 
 const useStyles = makeStyles((theme) => ({
     tabContainer: {
@@ -63,7 +64,7 @@ const NotificationsVolume = ({ volume, setVolume }) => {
                 // color="inherit"
                 // color="secondary"
             >
-                <VolumeUpIcon color="inherit" />
+                <Volume2 size={22} />
             </IconButton>
             <Popover
                 disableScrollLock
@@ -83,7 +84,7 @@ const NotificationsVolume = ({ volume, setVolume }) => {
                 <List dense className={classes.tabContainer}>
                     <Grid container spacing={2}>
                         <Grid item>
-                            <VolumeDownIcon />
+                            <Volume1 size={22} />
                         </Grid>
                         <Grid item xs>
                             <Slider
@@ -98,7 +99,7 @@ const NotificationsVolume = ({ volume, setVolume }) => {
                             />
                         </Grid>
                         <Grid item>
-                            <VolumeUpIcon />
+                            <Volume2 size={22} />
                         </Grid>
                     </Grid>
                 </List>

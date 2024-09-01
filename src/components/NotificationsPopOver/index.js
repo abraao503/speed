@@ -21,6 +21,7 @@ import alertSound from "../../assets/sound.mp3";
 import { AuthContext } from "../../context/Auth/AuthContext";
 import { i18n } from "../../translate/i18n";
 import toastError from "../../errors/toastError";
+import { MessageCircle } from "react-feather";
 
 const useStyles = makeStyles(theme => ({
 	tabContainer: {
@@ -231,7 +232,7 @@ const NotificationsPopOver = (volume) => {
 				style={{color:"white"}}
 			>
 				<Badge overlap="rectangular" badgeContent={notifications.length} color="secondary">
-					<ChatIcon />
+					<MessageCircle size={22} />
 				</Badge>
 			</IconButton>
 			<Popover

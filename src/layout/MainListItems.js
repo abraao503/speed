@@ -51,6 +51,7 @@ import {
 import usePlans from "../hooks/usePlans";
 import Typography from "@material-ui/core/Typography";
 import useVersion from "../hooks/useVersion";
+import { Columns, Grid, Zap, List as ListFeather, Users, Calendar, Tag, MessageSquare, HelpCircle, Send, ChevronDown, ChevronUp, Settings } from "react-feather";
 
 const useStyles = makeStyles((theme) => ({
   ListSubheader: {
@@ -74,7 +75,7 @@ function ListItemLink(props) {
   return (
     <li>
       <ListItem button dense component={renderLink} className={className}>
-        {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
+        {icon ? <ListItemIcon style={{minWidth: "40px"}}>{icon}</ListItemIcon> : null}
         <ListItemText primary={primary} />
       </ListItem>
     </li>
@@ -293,7 +294,7 @@ const MainListItems = (props) => {
             <ListItemLink
               to="/"
               primary="Dashboard"
-              icon={<DashboardOutlinedIcon />}
+              icon={<Grid size={22} />}
             />
           </div>
         )}
@@ -312,7 +313,7 @@ const MainListItems = (props) => {
           <ListItemLink
             to="/kanban"
             primary={i18n.t("Kanban")}
-            icon={<TableChartIcon />}
+            icon={<Columns size={22} />}
           />
         </div>
       )}
@@ -321,7 +322,7 @@ const MainListItems = (props) => {
         <ListItemLink
           to="/quick-messages"
           primary={i18n.t("mainDrawer.listItems.quickMessages")}
-          icon={<FlashOnIcon />}
+          icon={<Zap size={22} />}
         />
       </div>
 
@@ -329,7 +330,7 @@ const MainListItems = (props) => {
         <ListItemLink
           to="/todolist"
           primary={i18n.t("Tarefas")}
-          icon={<BorderColorIcon />}
+          icon={<ListFeather size={22} />}
         />
       </div>
 
@@ -337,7 +338,7 @@ const MainListItems = (props) => {
         <ListItemLink
           to="/contacts"
           primary={i18n.t("mainDrawer.listItems.contacts")}
-          icon={<ContactPhoneOutlinedIcon />}
+          icon={<Users size={22} />}
         />
       </div>
 
@@ -345,7 +346,7 @@ const MainListItems = (props) => {
         <ListItemLink
           to="/schedules"
           primary={i18n.t("mainDrawer.listItems.schedules")}
-          icon={<EventIcon />}
+          icon={<Calendar size={22} />}
         />
       </div>
 
@@ -353,7 +354,7 @@ const MainListItems = (props) => {
         <ListItemLink
           to="/tags"
           primary={i18n.t("mainDrawer.listItems.tags")}
-          icon={<LocalOfferIcon />}
+          icon={<Tag size={22} />}
         />
       </div>
 
@@ -363,7 +364,7 @@ const MainListItems = (props) => {
           primary={i18n.t("mainDrawer.listItems.chats")}
           icon={
             <Badge color="secondary" variant="dot" invisible={invisible}>
-              <ForumIcon />
+              <MessageSquare size={22} />
             </Badge>
           }
         />
@@ -373,7 +374,7 @@ const MainListItems = (props) => {
         <ListItemLink
           to="/helps"
           primary={i18n.t("mainDrawer.listItems.helps")}
-          icon={<HelpOutlineIcon />}
+          icon={<HelpCircle size={22} />}
         />
       </div>
 
@@ -382,7 +383,7 @@ const MainListItems = (props) => {
         perform="drawer-admin-items:view"
         yes={() => (
           <>
-            <Divider />
+            <Divider style={{margin: "5px 0"}} />
             <ListSubheader
               hidden={collapsed}
               style={{
@@ -403,20 +404,21 @@ const MainListItems = (props) => {
                   button
                   onClick={() => setOpenCampaignSubmenu((prev) => !prev)}
                 >
-                  <ListItemIcon>
-                    <EventAvailableIcon />
+                  <ListItemIcon style={{minWidth: "40px"}}>
+                    <Send size={22} />
                   </ListItemIcon>
                   <ListItemText
                     primary={i18n.t("mainDrawer.listItems.campaigns")}
+                    primaryTypographyProps={{style: {fontSize: "14px"}}}
                   />
                   {openCampaignSubmenu ? (
-                    <ExpandLessIcon />
+                    <ChevronUp size={22} />
                   ) : (
-                    <ExpandMoreIcon />
+                    <ChevronDown size={22} />
                   )}
                 </ListItem>
                 <Collapse
-                  style={{ paddingLeft: 15 }}
+                  style={{ paddingLeft: 10 }}
                   in={openCampaignSubmenu}
                   timeout="auto"
                   unmountOnExit
@@ -429,10 +431,10 @@ const MainListItems = (props) => {
                       }}
                       button
                     >
-                      <ListItemIcon>
-                        <ListIcon />
+                      <ListItemIcon style={{minWidth: "40px"}}>
+                        <ListFeather size={22} />
                       </ListItemIcon>
-                      <ListItemText primary="Listagem" />
+                      <ListItemText primary="Listagem" primaryTypographyProps={{style: {fontSize: "14px"}}} />
                     </ListItem>
                     <ListItem
                       onClick={() => {
@@ -441,10 +443,10 @@ const MainListItems = (props) => {
                       }}
                       button
                     >
-                      <ListItemIcon>
-                        <PeopleIcon />
+                      <ListItemIcon style={{minWidth: "40px"}}>
+                        <Users size={22} />
                       </ListItemIcon>
-                      <ListItemText primary="Listas de Contatos" />
+                      <ListItemText primary="Listas de Contatos" primaryTypographyProps={{style: {fontSize: "14px"}}} />
                     </ListItem>
                     <ListItem
                       onClick={() => {
@@ -453,10 +455,10 @@ const MainListItems = (props) => {
                       }}
                       button
                     >
-                      <ListItemIcon>
-                        <SettingsOutlinedIcon />
+                      <ListItemIcon style={{minWidth: "40px"}}>
+                        <Settings size={22} />
                       </ListItemIcon>
-                      <ListItemText primary="Configurações" />
+                      <ListItemText primary="Configurações" primaryTypographyProps={{style: {fontSize: "14px"}}} />
                     </ListItem>
                   </List>
                 </Collapse>

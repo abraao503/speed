@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
 import clsx from "clsx";
-import moment from "moment";
 import {
   makeStyles,
   Drawer,
@@ -18,8 +17,6 @@ import {
 
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import CachedIcon from "@material-ui/icons/Cached";
 
 import MainListItems from "./MainListItems";
 import NotificationsPopOver from "../components/NotificationsPopOver";
@@ -39,8 +36,7 @@ import ChatPopover from "../pages/Chat/ChatPopover";
 import { useDate } from "../hooks/useDate";
 
 import ColorModeContext from "../layout/themeContext";
-import Brightness4Icon from "@material-ui/icons/Brightness4";
-import Brightness7Icon from "@material-ui/icons/Brightness7";
+import { Moon, RefreshCw, Sun, User } from "react-feather";
 
 const drawerWidth = 240;
 
@@ -388,12 +384,12 @@ const LoggedInLayout = ({ children, themeToggle }) => {
             user?.profile === "admin" &&
             user?.company?.dueDate ? (
               <>
-                Olá <b>{user.name}</b>, Bem vindo a <b>{user?.company?.name}</b>
+                Olá, <b>{user.name}</b>! Bem-vindo a <b>{user?.company?.name}</b>
                 ! (Ativo até {dateToClient(user?.company?.dueDate)})
               </>
             ) : (
               <>
-                Olá <b>{user.name}</b>, Bem vindo a <b>{user?.company?.name}</b>
+                Olá, <b>{user.name}</b>! Bem-vindo a <b>{user?.company?.name}</b>
                 !
               </>
             )}
@@ -401,9 +397,9 @@ const LoggedInLayout = ({ children, themeToggle }) => {
 
           <IconButton edge="start" onClick={toggleColorMode}>
             {theme.mode === "dark" ? (
-              <Brightness7Icon style={{ color: "white" }} />
+              <Sun size={22} style={{ color: "white" }} />
             ) : (
-              <Brightness4Icon style={{ color: "white" }} />
+              <Moon size={22} style={{ color: "white" }} />
             )}
           </IconButton>
 
@@ -414,7 +410,7 @@ const LoggedInLayout = ({ children, themeToggle }) => {
             aria-label={i18n.t("mainDrawer.appBar.refresh")}
             color="inherit"
           >
-            <CachedIcon style={{ color: "white" }} />
+            <RefreshCw size={20} style={{ color: "white" }} />
           </IconButton>
 
           {user.id && <NotificationsPopOver volume={volume} />}
@@ -432,7 +428,7 @@ const LoggedInLayout = ({ children, themeToggle }) => {
               variant="contained"
               style={{ color: "white" }}
             >
-              <AccountCircle />
+              <User size={22} />
             </IconButton>
             <Menu
               id="menu-appbar"
