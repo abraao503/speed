@@ -161,6 +161,7 @@ const ScheduleModal = ({
       ...values,
       userId: user.id,
       sendAt: new Date(values.sendAt),
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     };
     try {
       if (scheduleId) {
