@@ -510,13 +510,13 @@ const MainListItems = (props) => {
               />
             </div>
 
-            <div onClick={drawerClose}>
+            {/* <div onClick={drawerClose}>
               <ListItemLink
                 to="/files"
                 primary={i18n.t("mainDrawer.listItems.files")}
                 icon={<Paperclip size={22} />}
               />
-            </div>
+            </div> */}
 
             <div onClick={drawerClose}>
               <ListItemLink
