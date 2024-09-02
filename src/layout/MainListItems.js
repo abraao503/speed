@@ -543,13 +543,13 @@ const MainListItems = (props) => {
               </div>
             )}
 
-            <div onClick={drawerClose}>
+            {/* <div onClick={drawerClose}>
               <ListItemLink
                 to="/financeiro"
                 primary={i18n.t("mainDrawer.listItems.financeiro")}
                 icon={<DollarSign size={22} />}
               />
-            </div>
+            </div> */}
 
             <div onClick={drawerClose}>
               <ListItemLink
