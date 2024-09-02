@@ -33,7 +33,7 @@ const App = () => {
 
   const theme = createTheme({
     shape: {
-      borderRadius: "1rem", // Valor em pixels para bordas arredondadas
+      borderRadius: "0.75rem",
     },
       typography: {
         allVariants: {
