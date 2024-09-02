@@ -27,6 +27,7 @@ import { AuthContext } from "../../context/Auth/AuthContext";
 import notifySound from "../../assets/chat_notify.mp3";
 import useSound from "use-sound";
 import { i18n } from "../../translate/i18n";
+import { MessageSquare } from "react-feather";
 
 const useStyles = makeStyles((theme) => ({
   mainPaper: {
@@ -231,7 +232,7 @@ export default function ChatPopover() {
         style={{ color: "white" }}
       >
         <Badge color="secondary" variant="dot" invisible={invisible}>
-          <ForumIcon />
+          <MessageSquare size={22} />
         </Badge>
       </IconButton>
       <Popover

@@ -24,8 +24,9 @@ import { AuthContext } from "../../context/Auth/AuthContext";
 import toastError from "../../errors/toastError";
 
 const useStyles = makeStyles((theme) => ({
+
   ticket: {
-    position: "relative",
+    position: "relative"
   },
 
   pendingTicket: {
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
   noTicketsText: {
     textAlign: "center",
-    color: "rgb(104, 121, 146)",
+    color: theme.palette.secondary,
     fontSize: "14px",
     lineHeight: "1.4",
   },
@@ -165,7 +166,7 @@ const TicketListItem = ({ ticket }) => {
           <Avatar src={ticket?.contact?.profilePicUrl} />
         </ListItemAvatar>
         <ListItemText
-          disableTypography
+          
           primary={
             <span className={classes.contactNameWrapper}>
               <Typography
