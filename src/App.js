@@ -32,6 +32,9 @@ const App = () => {
   );
 
   const theme = createTheme({
+    shape: {
+      borderRadius: "0.75rem",
+    },
       typography: {
         allVariants: {
           fontFamily: [

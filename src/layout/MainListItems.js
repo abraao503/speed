@@ -51,7 +51,7 @@ import {
 import usePlans from "../hooks/usePlans";
 import Typography from "@material-ui/core/Typography";
 import useVersion from "../hooks/useVersion";
-import { Columns, Grid, Zap, List as ListFeather, Users, Calendar, Tag, MessageSquare, HelpCircle, Send, ChevronDown, ChevronUp, Settings } from "react-feather";
+import { Columns, Grid, Zap, List as ListFeather, Users, Calendar, Tag, MessageSquare, HelpCircle, Send, ChevronDown, ChevronUp, Settings, Info, Globe, GitBranch, Wifi, Paperclip, GitPullRequest, Code, DollarSign } from "react-feather";
 
 const useStyles = makeStyles((theme) => ({
   ListSubheader: {
@@ -401,6 +401,7 @@ const MainListItems = (props) => {
             {showCampaigns && (
               <>
                 <ListItem
+                  dense
                   button
                   onClick={() => setOpenCampaignSubmenu((prev) => !prev)}
                 >
@@ -430,6 +431,7 @@ const MainListItems = (props) => {
                         history.push("/campaigns");
                       }}
                       button
+                      dense
                     >
                       <ListItemIcon style={{minWidth: "40px"}}>
                         <ListFeather size={22} />
@@ -442,6 +444,7 @@ const MainListItems = (props) => {
                         history.push("/contact-lists");
                       }}
                       button
+                      dense
                     >
                       <ListItemIcon style={{minWidth: "40px"}}>
                         <Users size={22} />
@@ -469,7 +472,7 @@ const MainListItems = (props) => {
                 <ListItemLink
                   to="/announcements"
                   primary={i18n.t("mainDrawer.listItems.annoucements")}
-                  icon={<AnnouncementIcon />}
+                  icon={<Info size={22} />}
                 />
               </div>
             )}
@@ -478,7 +481,7 @@ const MainListItems = (props) => {
                 <ListItemLink
                   to="/prompts"
                   primary={i18n.t("mainDrawer.listItems.prompts")}
-                  icon={<AllInclusive />}
+                  icon={<Globe size={22} />}
                 />
               </div>
             )}
@@ -488,7 +491,7 @@ const MainListItems = (props) => {
                 <ListItemLink
                   to="/queue-integration"
                   primary={i18n.t("mainDrawer.listItems.queueIntegration")}
-                  icon={<DeviceHubOutlined />}
+                  icon={<GitBranch size={22} />}
                 />
               </div>
             )}
@@ -501,25 +504,25 @@ const MainListItems = (props) => {
                     badgeContent={connectionWarning ? "!" : 0}
                     color="error"
                   >
-                    <SyncAltIcon />
+                    <Wifi size={22} />
                   </Badge>
                 }
               />
             </div>
 
-            <div onClick={drawerClose}>
+            {/* <div onClick={drawerClose}>
               <ListItemLink
                 to="/files"
                 primary={i18n.t("mainDrawer.listItems.files")}
-                icon={<AttachFile />}
+                icon={<Paperclip size={22} />}
               />
-            </div>
+            </div> */}
 
             <div onClick={drawerClose}>
               <ListItemLink
                 to="/queues"
                 primary={i18n.t("mainDrawer.listItems.queues")}
-                icon={<AccountTreeOutlinedIcon />}
+                icon={<GitPullRequest size={22} />}
               />
             </div>
 
@@ -527,7 +530,7 @@ const MainListItems = (props) => {
               <ListItemLink
                 to="/users"
                 primary={i18n.t("mainDrawer.listItems.users")}
-                icon={<PeopleAltOutlinedIcon />}
+                icon={<Users size={22} />}
               />
             </div>
             {showExternalApi && (
@@ -535,30 +538,30 @@ const MainListItems = (props) => {
                 <ListItemLink
                   to="/messages-api"
                   primary={i18n.t("mainDrawer.listItems.messagesAPI")}
-                  icon={<CodeRoundedIcon />}
+                  icon={<Code size={22} />}
                 />
               </div>
             )}
 
-            <div onClick={drawerClose}>
+            {/* <div onClick={drawerClose}>
               <ListItemLink
                 to="/financeiro"
                 primary={i18n.t("mainDrawer.listItems.financeiro")}
-                icon={<LocalAtmIcon />}
+                icon={<DollarSign size={22} />}
               />
-            </div>
+            </div> */}
 
             <div onClick={drawerClose}>
               <ListItemLink
                 to="/settings"
                 primary={i18n.t("mainDrawer.listItems.settings")}
-                icon={<SettingsOutlinedIcon />}
+                icon={<Settings size={22} />}
               />
             </div>
 
             {!collapsed && (
               <React.Fragment>
-                <Divider />
+                <Divider style={{margin: "5px 0"}}  />
                 {/* 
               // IMAGEM NO MENU
               <Hidden only={['sm', 'xs']}>
