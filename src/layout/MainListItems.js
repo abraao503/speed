@@ -401,6 +401,7 @@ const MainListItems = (props) => {
             {showCampaigns && (
               <>
                 <ListItem
+                  dense
                   button
                   onClick={() => setOpenCampaignSubmenu((prev) => !prev)}
                 >
@@ -430,6 +431,7 @@ const MainListItems = (props) => {
                         history.push("/campaigns");
                       }}
                       button
+                      dense
                     >
                       <ListItemIcon style={{minWidth: "40px"}}>
                         <ListFeather size={22} />
@@ -442,6 +444,7 @@ const MainListItems = (props) => {
                         history.push("/contact-lists");
                       }}
                       button
+                      dense
                     >
                       <ListItemIcon style={{minWidth: "40px"}}>
                         <Users size={22} />
