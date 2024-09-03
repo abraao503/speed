@@ -30,6 +30,7 @@ import toastError from "../errors/toastError";
 import AnnouncementsPopover from "../components/AnnouncementsPopover";
 
 import logo from "../assets/logo.png";
+import logo_w from "../assets/logo_w.png"
 import { SocketContext } from "../context/Socket/SocketContext";
 import ChatPopover from "../pages/Chat/ChatPopover";
 
@@ -181,7 +182,10 @@ const LoggedInLayout = ({ children, themeToggle }) => {
   // const [dueDate, setDueDate] = useState("");
   const { user } = useContext(AuthContext);
 
-  const theme = useTheme();
+  const theme = useTheme(); 
+  const initialLogo = theme.mode === 'light' ? logo : logo_w 
+  const [logoImg, setLogoImg] = useState(initialLogo)
+
   const { colorMode } = useContext(ColorModeContext);
   const greaterThenSm = useMediaQuery(theme.breakpoints.up("sm"));
 
@@ -318,6 +322,7 @@ const LoggedInLayout = ({ children, themeToggle }) => {
 
   const toggleColorMode = () => {
     colorMode.toggleColorMode();
+    setLogoImg(logoImg === logo ? logo_w : logo)
   };
 
   if (loading) {
@@ -338,7 +343,7 @@ const LoggedInLayout = ({ children, themeToggle }) => {
         open={drawerOpen}
       >
         <div className={classes.toolbarIcon}>
-          <img src={logo} className={classes.logo} alt="logo" />
+          <img src={logoImg} className={classes.logo} alt="logo" />
           <IconButton onClick={() => setDrawerOpen(!drawerOpen)}>
             <ChevronLeftIcon />
           </IconButton>

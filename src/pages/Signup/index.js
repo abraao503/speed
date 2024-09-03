@@ -24,8 +24,10 @@ import {
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import { useTheme } from "@material-ui/core";
 import Container from "@material-ui/core/Container";
 import logo from "../../assets/logo.png";
+import logo_w from "../../assets/logo_w.png"
 import { i18n } from "../../translate/i18n";
 
 import { openApi } from "../../services/api";
@@ -104,6 +106,9 @@ const SignUp = () => {
 
 	const [plans, setPlans] = useState([]);
 	const { list: listPlans } = usePlans();
+	const theme = useTheme(); 
+	const initialLogo = theme.mode === 'light' ? logo : logo_w 
+	const [logoImg, setLogoImg] = useState(initialLogo)
 
 	useEffect(() => {
 		async function fetchData() {
@@ -119,7 +124,7 @@ const SignUp = () => {
 			<CssBaseline />
 			<div className={classes.paper}>
 				<div>
-					<center><img style={{ margin: "0 auto", width: "70%" }} src={logo} alt="Whats" /></center>
+					<center><img style={{ margin: "0 auto", width: "70%" }} src={logoImg} alt="Whats" /></center>
 				</div>
 				{/*<Typography component="h1" variant="h5">
 					{i18n.t("signup.title")}
