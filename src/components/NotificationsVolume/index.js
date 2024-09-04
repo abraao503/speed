@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
     },
     icons: {
         color: "#fff",
+        padding: 8
     },
     customBadge: {
         backgroundColor: "#f44336",
