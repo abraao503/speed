@@ -36,6 +36,22 @@ const App = () => {
       borderRadius: "0.75rem",
     },
       typography: {
+        fontFamily: [
+          "Inter",
+          "ui-sans-serif",
+          "system-ui",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Helvetica Neue",
+          "Arial",
+          "Noto Sans",
+          "sans-serif",
+          "Apple Color Emoji",
+          "Segoe UI Emoji",
+          "Segoe UI Symbol",
+          "Noto Color Emoji"
+          ].join(','),
         allVariants: {
           fontFamily: [
             "Inter",
@@ -105,6 +121,7 @@ const App = () => {
         boxticket: mode === "light" ? "#EEE" : "#666",
         campaigntab: mode === "light" ? "#ededed" : "#666",
         mediainput: mode === "light" ? "#ededed" : "#1c1c1c",
+        internalChatMessageFontColor: "#333333"
       },
       mode,
     },
