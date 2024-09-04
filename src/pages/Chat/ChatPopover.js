@@ -8,7 +8,6 @@ import React, {
 import { makeStyles } from "@material-ui/core/styles";
 import toastError from "../../errors/toastError";
 import Popover from "@material-ui/core/Popover";
-import ForumIcon from "@material-ui/icons/Forum";
 import {
   Badge,
   IconButton,
