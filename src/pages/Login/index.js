@@ -9,12 +9,14 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import { useTheme } from "@material-ui/core"
 import Container from "@material-ui/core/Container";
 import { versionSystem } from "../../../package.json";
 import { i18n } from "../../translate/i18n";
 import { nomeEmpresa } from "../../../package.json";
 import { AuthContext } from "../../context/Auth/AuthContext";
 import logo from "../../assets/logo.png";
+import logo_w from "../../assets/logo_w.png"
 
 
 const Copyright = () => {
@@ -72,6 +74,9 @@ const useStyles = makeStyles(theme => ({
 
 const Login = () => {
 	const classes = useStyles();
+	const theme = useTheme(); 
+	const initialLogo = theme.mode === 'light' ? logo : logo_w 
+	const [logoImg, setLogoImg] = useState(initialLogo)
 
 	const [user, setUser] = useState({ email: "", password: "" });
 
@@ -93,7 +98,7 @@ const Login = () => {
 			<CssBaseline/>
 			<div className={classes.paper}>
 				<div>
-					<img style={{ margin: "0 auto", width: "70%" }} src={logo} alt="Whats" />
+					<img style={{ margin: "0 auto", width: "70%" }} src={logoImg} alt="Whats" />
 				</div>
 				{/*<Typography component="h1" variant="h5">
 					{i18n.t("login.title")}
