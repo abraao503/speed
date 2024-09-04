@@ -249,7 +249,7 @@ export default function AnnouncementsPopover() {
         variant="contained"
         aria-describedby={id}
         onClick={handleClick}
-        style={{ color: "white" }}
+        style={{ color: "white", padding: 8 }}
       >
         <Badge
           color="secondary"
