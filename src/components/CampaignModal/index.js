@@ -77,6 +77,7 @@ const CampaignSchema = Yup.object().shape({
     .min(2, "Too Short!")
     .max(50, "Too Long!")
     .required("Required"),
+  whatsappId: Yup.string().required("Required"),
 });
 
 const CampaignModal = ({
@@ -377,6 +378,7 @@ const CampaignModal = ({
         >
           {({ values, errors, touched, isSubmitting }) => (
             <Form>
+              {console.log(values)}
               <DialogContent dividers>
                 <Grid spacing={2} container>
                   <Grid xs={12} md={9} item>
