@@ -8,6 +8,7 @@ import TicketsManager from "../../components/TicketsManagerTabs/";
 import Ticket from "../../components/Ticket/";
 import logo from "../../assets/logo.png"; //PLW DESIGN LOGO//
 import logo_w from "../../assets/logo_w.png";
+import { i18n } from "../../translate/i18n";
 import { useTheme } from "@material-ui/core"
 import { useState, useRef } from "react";
 
