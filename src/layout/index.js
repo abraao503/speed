@@ -13,6 +13,8 @@ import {
   Menu,
   useTheme,
   useMediaQuery,
+  Box,
+  Hidden,
 } from "@material-ui/core";
 
 import MenuIcon from "@material-ui/icons/Menu";
@@ -42,11 +44,14 @@ import { Moon, RefreshCw, Sun, User } from "react-feather";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
+  buttonicon: {
+    padding: 8
+  },
   root: {
     display: "flex",
     height: "100vh",
     [theme.breakpoints.down("sm")]: {
-      height: "calc(100vh - 56px)",
+      // height: "calc(100vh - 56px)",
     },
     backgroundColor: theme.palette.fancyBackground,
     "& .MuiButton-outlinedPrimary": {
@@ -64,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
   },
   toolbar: {
-    paddingRight: 24, // keep right padding when drawer closed
+    // paddingRight: 24, // keep right padding when drawer closed
     color: theme.palette.dark.main,
     background: theme.palette.barraSuperior,
   },
@@ -97,7 +102,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   menuButton: {
-    marginRight: 36,
+    // marginRight: 36,
+    // paddingRight: 36,
     color: "#FFFFFF",
   },
   menuButtonHidden: {
@@ -169,6 +175,12 @@ const useStyles = makeStyles((theme) => ({
     },
     logo: theme.logo,
   },
+  menuBox: {
+    flexGrow: 0,
+    [theme.breakpoints.down('xs')]: {
+      flexGrow: 1
+    },
+  }
 }));
 
 const LoggedInLayout = ({ children, themeToggle }) => {
@@ -344,7 +356,7 @@ const LoggedInLayout = ({ children, themeToggle }) => {
       >
         <div className={classes.toolbarIcon}>
           <img src={logoImg} className={classes.logo} alt="logo" />
-          <IconButton onClick={() => setDrawerOpen(!drawerOpen)}>
+          <IconButton className={classes.buttonicon} onClick={() => setDrawerOpen(!drawerOpen)}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
@@ -365,43 +377,47 @@ const LoggedInLayout = ({ children, themeToggle }) => {
         color="primary"
       >
         <Toolbar variant="dense" className={classes.toolbar}>
-          <IconButton
-            edge="start"
-            variant="contained"
-            aria-label="open drawer"
-            onClick={() => setDrawerOpen(!drawerOpen)}
-            className={clsx(
-              classes.menuButton,
-              drawerOpen && classes.menuButtonHidden
-            )}
-          >
-            <MenuIcon />
-          </IconButton>
+          <Box className={classes.menuBox}>
+            <IconButton
+              edge="start"
+              aria-label="open drawer"
+              onClick={() => setDrawerOpen(!drawerOpen)}
+              className={clsx(
+                classes.IconButton,
+                classes.menuButton,
+                drawerOpen && classes.menuButtonHidden
+              )}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Box>
 
-          <Typography
-            component="h2"
-            variant="h6"
-            color="inherit"
-            noWrap
-            className={classes.title}
-          >
-            {/* {greaterThenSm && user?.profile === "admin" && getDateAndDifDays(user?.company?.dueDate).difData < 7 ? ( */}
-            {greaterThenSm &&
-            user?.profile === "admin" &&
-            user?.company?.dueDate ? (
-              <>
-                Olá, <b>{user.name}</b>! Bem-vindo a <b>{user?.company?.name}</b>
-                ! (Ativo até {dateToClient(user?.company?.dueDate)})
-              </>
-            ) : (
-              <>
-                Olá, <b>{user.name}</b>! Bem-vindo a <b>{user?.company?.name}</b>
-                !
-              </>
-            )}
-          </Typography>
+          <Hidden xsDown>
+            <Typography
+              component="h2"
+              variant="h6"
+              color="inherit"
+              noWrap
+              className={classes.title}
+            >
+              {/* {greaterThenSm && user?.profile === "admin" && getDateAndDifDays(user?.company?.dueDate).difData < 7 ? ( */}
+              {greaterThenSm &&
+              user?.profile === "admin" &&
+              user?.company?.dueDate ? (
+                <>
+                  Olá, <b>{user.name}</b>! Bem-vindo a <b>{user?.company?.name}</b>
+                  ! (Ativo até {dateToClient(user?.company?.dueDate)})
+                </>
+              ) : (
+                <>
+                  Olá, <b>{user.name}</b>! Bem-vindo a <b>{user?.company?.name}</b>
+                  !
+                </>
+              )}
+            </Typography>
+          </Hidden>
 
-          <IconButton edge="start" onClick={toggleColorMode}>
+          <IconButton className={classes.buttonicon} onClick={toggleColorMode}>
             {theme.mode === "dark" ? (
               <Sun size={22} style={{ color: "white" }} />
             ) : (
@@ -415,6 +431,7 @@ const LoggedInLayout = ({ children, themeToggle }) => {
             onClick={handleRefreshPage}
             aria-label={i18n.t("mainDrawer.appBar.refresh")}
             color="inherit"
+            className={classes.buttonicon}
           >
             <RefreshCw size={20} style={{ color: "white" }} />
           </IconButton>
@@ -427,6 +444,7 @@ const LoggedInLayout = ({ children, themeToggle }) => {
 
           <div>
             <IconButton
+              className={classes.buttonicon}
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"

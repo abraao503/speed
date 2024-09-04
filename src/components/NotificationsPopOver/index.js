@@ -229,7 +229,7 @@ const NotificationsPopOver = (volume) => {
 				ref={anchorEl}
 				aria-label="Open Notifications"
 				color="inherit"
-				style={{color:"white"}}
+				style={{color:"white", padding: 8}}
 			>
 				<Badge overlap="rectangular" badgeContent={notifications.length} color="secondary">
 					<MessageCircle size={22} />

@@ -228,7 +228,7 @@ export default function ChatPopover() {
         variant="contained"
         color={invisible ? "default" : "inherit"}
         onClick={handleClick}
-        style={{ color: "white" }}
+        style={{ color: "white", padding: 8 }}
       >
         <Badge color="secondary" variant="dot" invisible={invisible}>
           <MessageSquare size={22} />
