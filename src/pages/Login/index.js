@@ -86,9 +86,9 @@ const Login = () => {
 		setUser({ ...user, [e.target.name]: e.target.value });
 	};
 
-	const handlSubmit = e => {
+	const handlSubmit = async e => {
 		e.preventDefault();
-		handleLogin(user);
+		await handleLogin(user);
 	};
 
 	
