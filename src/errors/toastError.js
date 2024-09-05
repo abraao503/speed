@@ -3,7 +3,16 @@ import { i18n } from "../translate/i18n";
 import { isString } from 'lodash';
 
 const toastError = err => {
+    console.log(err.response);
+    
+    const errorCode = err.response?.status
     const errorMsg = err.response?.data?.error;
+
+    if(errorCode === 500) {
+        console.error(`Error: ${i18n.t(`backendErrors.${errorMsg}`)}`);
+        return
+    }
+
     if (errorMsg) {
         if (i18n.exists(`backendErrors.${errorMsg}`)) {
             console.error(`Error: ${i18n.t(`backendErrors.${errorMsg}`)}`);
