@@ -27,6 +27,7 @@ import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import EditIcon from "@material-ui/icons/Edit";
 
 import "./Schedules.css"; // Importe o arquivo CSS
+import { useTheme } from "@mui/material";
 
 // Defina a função getUrlParam antes de usá-la
 function getUrlParam(paramName) {
@@ -237,6 +238,8 @@ const Schedules = () => {
     return str;
   };
 
+  const theme = useTheme();
+
   return (
     <MainContainer>
       <ConfirmationModal
@@ -262,19 +265,6 @@ const Schedules = () => {
       <MainHeader>
         <Title>{i18n.t("schedules.title")} ({schedules.length})</Title>
         <MainHeaderButtonsWrapper>
-          <TextField
-            placeholder={i18n.t("contacts.searchPlaceholder")}
-            type="search"
-            value={searchParam}
-            onChange={handleSearch}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon style={{ color: "gray" }} />
-                </InputAdornment>
-              ),
-            }}
-          />
           <Button
             variant="contained"
             color="primary"
@@ -284,13 +274,27 @@ const Schedules = () => {
           </Button>
         </MainHeaderButtonsWrapper>
       </MainHeader>
+      <TextField
+        placeholder={i18n.t("contacts.searchPlaceholder")}
+        type="search"
+        style={{ margin: theme.spacing(1) }}
+        value={searchParam}
+        onChange={handleSearch}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          ),
+        }}
+      />
       <Paper className={classes.mainPaper} variant="outlined" onScroll={handleScroll}>
         <Calendar
           messages={defaultMessages}
           formats={{
-          agendaDateFormat: "DD/MM ddd",
-          weekdayFormat: "dddd"
-      }}
+            agendaDateFormat: "DD/MM ddd",
+            weekdayFormat: "dddd"
+          }}
           localizer={localizer}
           events={schedules.map((schedule) => ({
             title: (

@@ -37,6 +37,8 @@ import NewTicketModal from "../../components/NewTicketModal";
 import { SocketContext } from "../../context/Socket/SocketContext";
 
 import { CSVLink } from "react-csv";
+import { useMediaQuery, useTheme } from "@mui/material";
+import { Download, Plus, Upload } from "react-feather";
 
 const reducer = (state, action) => {
   if (action.type === "LOAD_CONTACTS") {
@@ -89,6 +91,13 @@ const useStyles = makeStyles((theme) => ({
     overflowY: "scroll",
     ...theme.scrollbarStyles,
   },
+  iconButton: {
+    color: theme.palette.primary.contrastText,
+    backgroundColor: theme.palette.primary.main,
+    "&:hover": {
+      backgroundColor: theme.palette.primary.main
+    }
+  }
 }));
 
 const Contacts = () => {
@@ -96,6 +105,8 @@ const Contacts = () => {
   const history = useHistory();
 
   const { user } = useContext(AuthContext);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [loading, setLoading] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
@@ -265,9 +276,8 @@ const Contacts = () => {
       <ConfirmationModal
         title={
           deletingContact
-            ? `${i18n.t("contacts.confirmationModal.deleteTitle")} ${
-                deletingContact.name
-              }?`
+            ? `${i18n.t("contacts.confirmationModal.deleteTitle")} ${deletingContact.name
+            }?`
             : `${i18n.t("contacts.confirmationModal.importTitle")}`
         }
         open={confirmOpen}
@@ -285,34 +295,44 @@ const Contacts = () => {
       <MainHeader>
         <Title>{i18n.t("contacts.title")}</Title>
         <MainHeaderButtonsWrapper>
-          <TextField
-            placeholder={i18n.t("contacts.searchPlaceholder")}
-            type="search"
-            value={searchParam}
-            onChange={handleSearch}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon style={{ color: "gray" }} />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={(e) => setConfirmOpen(true)}
-          >
-            {i18n.t("contacts.buttons.import")}
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleOpenContactModal}
-          >
-            {i18n.t("contacts.buttons.add")}
-          </Button>
-
+          {
+            isMobile ?
+              <IconButton
+                type="button"
+                disableRipple
+                disableTouchRipple
+                disableFocusRipple
+                className={classes.iconButton}
+                onClick={(e) => setConfirmOpen(true)}
+              >
+                <Upload size={22} />
+              </IconButton>
+              :
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={(e) => setConfirmOpen(true)}
+              >
+                {i18n.t("contacts.buttons.import")}
+              </Button>
+          }
+          {
+            isMobile ?
+              <IconButton
+                className={classes.iconButton}
+                onClick={handleOpenContactModal}
+              >
+                <Plus size={22} />
+              </IconButton>
+              :
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleOpenContactModal}
+              >
+                {i18n.t("contacts.buttons.add")}
+              </Button>
+          }
           <CSVLink
             style={{ textDecoration: "none" }}
             separator=";"
@@ -323,12 +343,34 @@ const Contacts = () => {
               email: contact.email,
             }))}
           >
-            <Button variant="contained" color="primary">
-              EXPORTAR CONTATOS
-            </Button>
+            {isMobile ?
+              <IconButton
+                className={classes.iconButton}
+              >
+                <Download size={22} />
+              </IconButton>
+              :
+              <Button variant="contained" color="primary">
+                EXPORTAR CONTATOS
+              </Button>
+            }
           </CSVLink>
         </MainHeaderButtonsWrapper>
       </MainHeader>
+      <TextField
+        placeholder={i18n.t("contacts.searchPlaceholder")}
+        type="search"
+        value={searchParam}
+        style={{ margin: theme.spacing(1) }}
+        onChange={handleSearch}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon style={{ color: "gray" }} />
+            </InputAdornment>
+          ),
+        }}
+      />
       <Paper
         className={classes.mainPaper}
         variant="outlined"
