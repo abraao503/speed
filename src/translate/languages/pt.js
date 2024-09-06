@@ -711,7 +711,7 @@ const messages = {
         title: "Informativos",
         searchPlaceholder: "Pesquisa",
         buttons: {
-          add: "Novo Informativo",
+          add: "Criar novo",
           contactLists: "Listas de Informativos",
         },
         table: {
