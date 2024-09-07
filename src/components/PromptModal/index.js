@@ -21,17 +21,24 @@ import QueueSelectSingle from "../../components/QueueSelectSingle";
 
 import api from "../../services/api";
 import toastError from "../../errors/toastError";
+import { useMediaQuery, useTheme } from "@mui/material";
 
 const useStyles = makeStyles(theme => ({
     root: {
         display: "flex",
         flexWrap: "wrap",
     },
+
     multFieldLine: {
         display: "flex",
         "& > *:not(:last-child)": {
             marginRight: theme.spacing(1),
         },
+    },
+
+    oneLineField: {
+        display: "flex",
+        flexDirection: "column"
     },
 
     btnWrapper: {
@@ -140,6 +147,9 @@ const PromptModal = ({ open, onClose, promptId }) => {
         handleClose();
     };
 
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
     return (
         <div className={classes.root}>
             <Dialog
@@ -212,7 +222,7 @@ const PromptModal = ({ open, onClose, promptId }) => {
                                     multiline={true}
                                 />
                                 <QueueSelectSingle />
-                                <div className={classes.multFieldLine}>
+                                <div className={isMobile ? classes.oneLineField : classes.multFieldLine}>
                                     <FormControl fullWidth margin="dense" variant="outlined">
                                     <InputLabel>{i18n.t("promptModal.form.voice")}</InputLabel>
                                         <Select
@@ -295,7 +305,7 @@ const PromptModal = ({ open, onClose, promptId }) => {
                                     />
                                 </div>
                                 
-                                <div className={classes.multFieldLine}>
+                                <div className={isMobile ? classes.oneLineField : classes.multFieldLine}>
                                     <Field
                                         as={TextField}
                                         label={i18n.t("promptModal.form.temperature")}
