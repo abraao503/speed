@@ -318,7 +318,7 @@ const Schedules = () => {
           }))}
           startAccessor="start"
           endAccessor="end"
-          style={{ height: 500 }}
+          style={{ height: "100%" }}
         />
       </Paper>
     </MainContainer>
