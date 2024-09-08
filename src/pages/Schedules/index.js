@@ -99,6 +99,47 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     overflowY: "scroll",
     ...theme.scrollbarStyles,
+
+    '& .rbc-calendar': {
+      fontFamily: "Inter"
+    },
+
+    '& .rbc-toolbar button': {
+      fontFamily: "Inter",
+      border: `1px solid ${theme.palette.calendarBorder}`,
+      color: "inherit",
+      backgroundColor: "inherit",
+      cursor: "pointer"
+    },
+
+    '& .rbc-active': {
+      backgroundColor: `${theme.palette.calendarToday} !important`,
+      color: `${theme.palette.common.white} !important`,
+    },
+
+    '& .rbc-active:hover': {
+      color: `${theme.palette.common.white} !important`,
+    },
+
+    '& .rbc-active:focus': {
+      color: `${theme.palette.common.white} !important`,
+    },
+
+    '& .rbc-today': {
+      backgroundColor: theme.palette.calendarToday,
+    },
+
+    '& .rbc-today.rbc-header': {
+      color: theme.palette.common.white,
+    },
+
+    '& .rbc-current': {
+      color: theme.palette.common.white,
+    },
+
+    '& .rbc-off-range-bg': {
+      backgroundColor: theme.palette.calendarOffRange
+    }
   },
 }));
 
@@ -118,7 +159,6 @@ const Schedules = () => {
   const [schedules, dispatch] = useReducer(reducer, []);
   const [scheduleModalOpen, setScheduleModalOpen] = useState(false);
   const [contactId, setContactId] = useState(+getUrlParam("contactId"));
-
 
   const fetchSchedules = useCallback(async () => {
     try {
