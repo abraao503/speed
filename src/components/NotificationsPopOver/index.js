@@ -22,6 +22,7 @@ import { AuthContext } from "../../context/Auth/AuthContext";
 import { i18n } from "../../translate/i18n";
 import toastError from "../../errors/toastError";
 import { MessageCircle } from "react-feather";
+import { Tooltip } from "@mui/material";
 
 const useStyles = makeStyles(theme => ({
 	tabContainer: {
@@ -65,7 +66,7 @@ const NotificationsPopOver = (volume) => {
 
 	const historyRef = useRef(history);
 
-  const socketManager = useContext(SocketContext);
+	const socketManager = useContext(SocketContext);
 
 	useEffect(() => {
 		const fetchSettings = async () => {
@@ -75,10 +76,10 @@ const NotificationsPopOver = (volume) => {
 					setShowPendingTickets(true);
 				}
 			} catch (err) {
-			  	toastError(err);
+				toastError(err);
 			}
 		}
-	  
+
 		fetchSettings();
 	}, []);
 
@@ -111,7 +112,7 @@ const NotificationsPopOver = (volume) => {
 	}, [ticketIdUrl]);
 
 	useEffect(() => {
-    const socket = socketManager.getSocket(user.companyId);
+		const socket = socketManager.getSocket(user.companyId);
 
 		socket.on("ready", () => socket.emit("joinNotification"));
 
@@ -142,8 +143,8 @@ const NotificationsPopOver = (volume) => {
 
 		socket.on(`company-${user.companyId}-appMessage`, data => {
 			if (
-				data.action === "create" && !data.message.fromMe && 
-				(data.ticket.status !== "pending" ) &&
+				data.action === "create" && !data.message.fromMe &&
+				(data.ticket.status !== "pending") &&
 				(!data.message.read || data.ticket.status === "pending") &&
 				(data.ticket.userId === user?.id || !data.ticket.userId) &&
 				(user?.queues?.some(queue => (queue.id === data.ticket.queueId)) || !data.ticket.queueId)
@@ -224,17 +225,19 @@ const NotificationsPopOver = (volume) => {
 
 	return (
 		<>
-			<IconButton
-				onClick={handleClick}
-				ref={anchorEl}
-				aria-label="Open Notifications"
-				color="inherit"
-				style={{color:"white", padding: 8}}
-			>
-				<Badge overlap="rectangular" badgeContent={notifications.length} color="secondary">
-					<MessageCircle size={22} />
-				</Badge>
-			</IconButton>
+			<Tooltip title="Notificações">
+				<IconButton
+					onClick={handleClick}
+					ref={anchorEl}
+					aria-label="Open Notifications"
+					color="inherit"
+					style={{ color: "white", padding: 8 }}
+				>
+					<Badge overlap="rectangular" badgeContent={notifications.length} color="secondary">
+						<MessageCircle size={22} />
+					</Badge>
+				</IconButton>
+			</Tooltip>
 			<Popover
 				disableScrollLock
 				open={isOpen}

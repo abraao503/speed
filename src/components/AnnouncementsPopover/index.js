@@ -27,6 +27,7 @@ import { isArray } from "lodash";
 import moment from "moment";
 import { SocketContext } from "../../context/Socket/SocketContext";
 import { Bell } from "react-feather";
+import { Tooltip } from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
   mainPaper: {
@@ -160,9 +161,9 @@ export default function AnnouncementsPopover() {
   useEffect(() => {
     const companyId = localStorage.getItem("companyId");
     const socket = socketManager.getSocket(companyId);
-    
+
     if (!socket) {
-      return () => {}; 
+      return () => { };
     }
 
     socket.on(`company-announcement`, (data) => {
@@ -245,20 +246,22 @@ export default function AnnouncementsPopover() {
         open={showAnnouncementDialog}
         handleClose={() => setShowAnnouncementDialog(false)}
       />
-      <IconButton
-        variant="contained"
-        aria-describedby={id}
-        onClick={handleClick}
-        style={{ color: "white", padding: 8 }}
-      >
-        <Badge
-          color="secondary"
-          variant="dot"
-          invisible={invisible || announcements.length < 1}
+      <Tooltip title="Anúncios">
+        <IconButton
+          variant="contained"
+          aria-describedby={id}
+          onClick={handleClick}
+          style={{ color: "white", padding: 8 }}
         >
-          <Bell size={22} />
-        </Badge>
-      </IconButton>
+          <Badge
+            color="secondary"
+            variant="dot"
+            invisible={invisible || announcements.length < 1}
+          >
+            <Bell size={22} />
+          </Badge>
+        </IconButton>
+      </Tooltip>
       <Popover
         id={id}
         open={open}

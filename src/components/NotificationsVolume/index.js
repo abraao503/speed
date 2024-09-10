@@ -7,7 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import VolumeUpIcon from "@material-ui/icons/VolumeUp";
 import VolumeDownIcon from "@material-ui/icons/VolumeDown";
 
-import { Grid, Slider } from "@material-ui/core";
+import { Grid, Slider, Tooltip } from "@material-ui/core";
 import { Volume1, Volume2 } from "react-feather";
 
 const useStyles = makeStyles((theme) => ({
@@ -57,16 +57,18 @@ const NotificationsVolume = ({ volume, setVolume }) => {
 
     return (
         <>
-            <IconButton
-                className={classes.icons}
-                onClick={handleClick}
-                ref={anchorEl}
-                aria-label="Open Notifications"
+            <Tooltip title="Volume das notificações">
+                <IconButton
+                    className={classes.icons}
+                    onClick={handleClick}
+                    ref={anchorEl}
+                    aria-label="Open Notifications"
                 // color="inherit"
                 // color="secondary"
-            >
-                <Volume2 size={22} />
-            </IconButton>
+                >
+                    <Volume2 size={22} />
+                </IconButton>
+            </Tooltip>
             <Popover
                 disableScrollLock
                 open={isOpen}

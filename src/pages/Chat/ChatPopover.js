@@ -27,6 +27,7 @@ import notifySound from "../../assets/chat_notify.mp3";
 import useSound from "use-sound";
 import { i18n } from "../../translate/i18n";
 import { MessageSquare } from "react-feather";
+import { Tooltip } from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
   mainPaper: {
@@ -227,17 +228,19 @@ export default function ChatPopover() {
 
   return (
     <div>
-      <IconButton
-        aria-describedby={id}
-        variant="contained"
-        color={invisible ? "default" : "inherit"}
-        onClick={handleClick}
-        style={{ color: "white", padding: 8 }}
-      >
-        <Badge color="secondary" variant="dot" invisible={invisible}>
-          <MessageSquare size={22} />
-        </Badge>
-      </IconButton>
+      <Tooltip title="Chat interno">
+        <IconButton
+          aria-describedby={id}
+          variant="contained"
+          color={invisible ? "default" : "inherit"}
+          onClick={handleClick}
+          style={{ color: "white", padding: 8 }}
+        >
+          <Badge color="secondary" variant="dot" invisible={invisible}>
+            <MessageSquare size={22} />
+          </Badge>
+        </IconButton>
+      </Tooltip>
       <Popover
         id={id}
         open={open}

@@ -19,7 +19,7 @@ import {
 
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-
+import Tooltip from '@material-ui/core/Tooltip';
 import MainListItems from "./MainListItems";
 import NotificationsPopOver from "../components/NotificationsPopOver";
 import NotificationsVolume from "../components/NotificationsVolume";
@@ -194,8 +194,8 @@ const LoggedInLayout = ({ children, themeToggle }) => {
   // const [dueDate, setDueDate] = useState("");
   const { user } = useContext(AuthContext);
 
-  const theme = useTheme(); 
-  const initialLogo = theme.mode === 'light' ? logo : logo_w 
+  const theme = useTheme();
+  const initialLogo = theme.mode === 'light' ? logo : logo_w
   const [logoImg, setLogoImg] = useState(initialLogo)
 
   const { colorMode } = useContext(ColorModeContext);
@@ -402,8 +402,8 @@ const LoggedInLayout = ({ children, themeToggle }) => {
             >
               {/* {greaterThenSm && user?.profile === "admin" && getDateAndDifDays(user?.company?.dueDate).difData < 7 ? ( */}
               {greaterThenSm &&
-              user?.profile === "admin" &&
-              user?.company?.dueDate ? (
+                user?.profile === "admin" &&
+                user?.company?.dueDate ? (
                 <>
                   Olá, <b>{user.name}</b>! Bem-vindo a <b>{user?.company?.name}</b>
                   ! (Ativo até {dateToClient(user?.company?.dueDate)})
@@ -417,24 +417,29 @@ const LoggedInLayout = ({ children, themeToggle }) => {
             </Typography>
           </Hidden>
 
-          <IconButton className={classes.buttonicon} onClick={toggleColorMode}>
-            {theme.mode === "dark" ? (
-              <Sun size={22} style={{ color: "white" }} />
-            ) : (
-              <Moon size={22} style={{ color: "white" }} />
-            )}
-          </IconButton>
+          <Tooltip title="Mudar tema">
+            <IconButton className={classes.buttonicon} onClick={toggleColorMode}>
+              {theme.mode === "dark" ? (
+                <Sun size={22} style={{ color: "white" }} />
+              ) : (
+                <Moon size={22} style={{ color: "white" }} />
+              )}
+            </IconButton>
+          </Tooltip>
 
           <NotificationsVolume setVolume={setVolume} volume={volume} />
 
-          <IconButton
-            onClick={handleRefreshPage}
-            aria-label={i18n.t("mainDrawer.appBar.refresh")}
-            color="inherit"
-            className={classes.buttonicon}
-          >
-            <RefreshCw size={20} style={{ color: "white" }} />
-          </IconButton>
+
+          <Tooltip title="Recarregar página">
+            <IconButton
+              onClick={handleRefreshPage}
+              aria-label={i18n.t("mainDrawer.appBar.refresh")}
+              color="inherit"
+              className={classes.buttonicon}
+            >
+              <RefreshCw size={20} style={{ color: "white" }} />
+            </IconButton>
+          </Tooltip>
 
           {user.id && <NotificationsPopOver volume={volume} />}
 
@@ -443,17 +448,19 @@ const LoggedInLayout = ({ children, themeToggle }) => {
           <ChatPopover />
 
           <div>
-            <IconButton
-              className={classes.buttonicon}
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleMenu}
-              variant="contained"
-              style={{ color: "white" }}
-            >
-              <User size={22} />
-            </IconButton>
+            <Tooltip title="Conta e log out">
+              <IconButton
+                className={classes.buttonicon}
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                variant="contained"
+                style={{ color: "white" }}
+              >
+                <User size={22} />
+              </IconButton>
+            </Tooltip>
             <Menu
               id="menu-appbar"
               anchorEl={anchorEl}
