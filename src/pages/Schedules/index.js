@@ -28,6 +28,7 @@ import EditIcon from "@material-ui/icons/Edit";
 
 import "./Schedules.css"; // Importe o arquivo CSS
 import { useTheme } from "@mui/material";
+import { Edit2, Trash } from "react-feather";
 
 // Defina a função getUrlParam antes de usá-la
 function getUrlParam(paramName) {
@@ -66,7 +67,10 @@ var defaultMessages = {
 
 const reducer = (state, action) => {
   if (action.type === "LOAD_SCHEDULES") {
-    return [...state, ...action.payload];
+    const newSchedules = action.payload.filter(
+      (newSchedule) => !state.some((schedule) => schedule.id === newSchedule.id)
+    );
+    return [...state, ...newSchedules];
   }
 
   if (action.type === "UPDATE_SCHEDULES") {
@@ -139,6 +143,11 @@ const useStyles = makeStyles((theme) => ({
 
     '& .rbc-off-range-bg': {
       backgroundColor: theme.palette.calendarOffRange
+    },
+
+    '& .rbc-event': {
+      backgroundColor: theme.palette.calendarEventBackground,
+      color: theme.palette.light.main
     }
   },
 }));
@@ -165,7 +174,6 @@ const Schedules = () => {
       const { data } = await api.get("/schedules/", {
         params: { searchParam, pageNumber },
       });
-
       dispatch({ type: "LOAD_SCHEDULES", payload: data.schedules });
       setHasMore(data.hasMore);
       setLoading(false);
@@ -340,11 +348,13 @@ const Schedules = () => {
             title: (
               <div className="event-container">
                 <div style={eventTitleStyle}>{schedule.contact.name}</div>
-                <DeleteOutlineIcon
+                <Trash
+                  size={18}
                   onClick={() => handleDeleteSchedule(schedule.id)}
                   className="delete-icon"
                 />
-                <EditIcon
+                <Edit2
+                  size={18}
                   onClick={() => {
                     handleEditSchedule(schedule);
                     setScheduleModalOpen(true);

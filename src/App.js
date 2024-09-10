@@ -123,6 +123,7 @@ const App = () => {
       mediainput: mode === "light" ? "#ededed" : "#1c1c1c",
       internalChatMessageFontColor: "#333333",
       calendarOffRange: mode === "light" ? "#eeee" : "#686868",
+      calendarEventBackground: mode === "light" ? "#344bb2" : "#ffffff",
       calendarToday: mode === "light" ? "#1e2b66" : "#262626",
       calendarBorder: mode === "light" ? "inherit" : "#8e8e8e",
     },
