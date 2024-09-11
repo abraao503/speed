@@ -101,11 +101,12 @@ export function ChatModal({
           users,
           title,
         });
+
         handleLoadNewChat(data);
       }
       handleClose();
     } catch (err) {}
-  };  
+  };
 
   return (
     <Dialog
@@ -212,7 +213,13 @@ function Chat(props) {
 
     socket.on(`company-${companyId}-chat-user-${user.id}`, (data) => {
       if (data.action === "create") {
-        setChats((prev) => [data.record, ...prev]);
+        setChats((prev) => {
+          const allChats = prev;
+          const chatAlreadyExists = allChats.find(
+            (c) => c.id === data.record.id
+          );
+          return chatAlreadyExists ? allChats : [data.record, ...allChats];
+        });
       }
       if (data.action === "update") {
         const changedChats = chats.map((chat) => {
@@ -231,6 +238,7 @@ function Chat(props) {
     socket.on(`company-${companyId}-chat`, (data) => {
       if (data.action === "delete") {
         const filteredChats = chats.filter((c) => c.id !== +data.id);
+
         setChats(filteredChats);
         setMessages([]);
         setMessagesPage(1);
@@ -334,20 +342,19 @@ function Chat(props) {
     return (
       <Grid className={classes.gridContainer} container>
         <Grid className={classes.gridItem} md={3} item>
-          
-            <div className={classes.btnContainer}>
-              <Button
-                onClick={() => {
-                  setDialogType("new");
-                  setShowDialog(true);
-                }}
-                color="primary"
-                variant="contained"
-              >
-                Nova
-              </Button>
-            </div>
-          
+          <div className={classes.btnContainer}>
+            <Button
+              onClick={() => {
+                setDialogType("new");
+                setShowDialog(true);
+              }}
+              color="primary"
+              variant="contained"
+            >
+              Nova
+            </Button>
+          </div>
+
           <ChatList
             chats={chats}
             pageInfo={chatsPageInfo}
