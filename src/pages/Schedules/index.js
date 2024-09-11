@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useReducer, useCallback, useContext } from "react";
+import React, {
+  useState,
+  useEffect,
+  useReducer,
+  useCallback,
+  useContext,
+} from "react";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
@@ -62,7 +68,7 @@ var defaultMessages = {
   noEventsInRange: "Não há agendamentos no período.",
   showMore: function showMore(total) {
     return "+" + total + " mais";
-  }
+  },
 };
 
 const reducer = (state, action) => {
@@ -311,7 +317,9 @@ const Schedules = () => {
         cleanContact={cleanContact}
       />
       <MainHeader>
-        <Title>{i18n.t("schedules.title")} ({schedules.length})</Title>
+        <Title>
+          {i18n.t("schedules.title")} ({schedules.length})
+        </Title>
         <MainHeaderButtonsWrapper>
           <Button
             variant="contained"
@@ -341,7 +349,7 @@ const Schedules = () => {
           messages={defaultMessages}
           formats={{
             agendaDateFormat: "DD/MM ddd",
-            weekdayFormat: "dddd"
+            weekdayFormat: "dddd",
           }}
           localizer={localizer}
           events={schedules.map((schedule) => ({
