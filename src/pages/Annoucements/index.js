@@ -28,10 +28,11 @@ import TableRowSkeleton from "../../components/TableRowSkeleton";
 import AnnouncementModal from "../../components/AnnouncementModal";
 import ConfirmationModal from "../../components/ConfirmationModal";
 import toastError from "../../errors/toastError";
-import { Grid } from "@material-ui/core";
+import { Grid, useTheme } from "@material-ui/core";
 import { isArray } from "lodash";
 import { SocketContext } from "../../context/Socket/SocketContext";
 import { AuthContext } from "../../context/Auth/AuthContext";
+import MainHeaderButtonsWrapper from "../../components/MainHeaderButtonsWrapper";
 
 const reducer = (state, action) => {
   if (action.type === "LOAD_ANNOUNCEMENTS") {
@@ -94,6 +95,7 @@ const useStyles = makeStyles((theme) => ({
 const Announcements = () => {
   const classes = useStyles();
   const history = useHistory();
+  const theme = useTheme();
 
   const { user } = useContext(AuthContext);
 
@@ -189,10 +191,10 @@ const Announcements = () => {
   const handleDeleteAnnouncement = async (announcement) => {
     try {
       if (announcement.mediaName)
-      await api.delete(`/announcements/${announcement.id}/media-upload`);
+        await api.delete(`/announcements/${announcement.id}/media-upload`);
 
       await api.delete(`/announcements/${announcement.id}`);
-      
+
       toast.success(i18n.t("announcements.toasts.deleted"));
     } catch (err) {
       toastError(err);
@@ -251,42 +253,32 @@ const Announcements = () => {
         announcementId={selectedAnnouncement && selectedAnnouncement.id}
       />
       <MainHeader>
-        <Grid style={{ width: "99.6%" }} container>
-          <Grid xs={12} sm={8} item>
-            <Title>{i18n.t("announcements.title")} ({announcements.length})</Title>
-          </Grid>
-          <Grid xs={12} sm={4} item>
-            <Grid spacing={2} container>
-              <Grid xs={6} sm={6} item>
-                <TextField
-                  fullWidth
-                  placeholder={i18n.t("announcements.searchPlaceholder")}
-                  type="search"
-                  value={searchParam}
-                  onChange={handleSearch}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <SearchIcon style={{ color: "gray" }} />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </Grid>
-              <Grid xs={6} sm={6} item>
-                <Button
-                  fullWidth
-                  variant="contained"
-                  onClick={handleOpenAnnouncementModal}
-                  color="primary"
-                >
-                  {i18n.t("announcements.buttons.add")}
-                </Button>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
+        <Title>{i18n.t("announcements.title")} ({announcements.length})</Title>
+        <MainHeaderButtonsWrapper>
+          <Button
+            variant="contained"
+            onClick={handleOpenAnnouncementModal}
+            color="primary"
+          >
+            {i18n.t("announcements.buttons.add")}
+          </Button>
+        </MainHeaderButtonsWrapper>
       </MainHeader>
+      <TextField
+        fullWidth
+        placeholder={i18n.t("announcements.searchPlaceholder")}
+        type="search"
+        style={{ margin: theme.spacing(1) }}
+        value={searchParam}
+        onChange={handleSearch}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon style={{ color: "gray" }} />
+            </InputAdornment>
+          ),
+        }}
+      />
       <Paper
         className={classes.mainPaper}
         variant="outlined"

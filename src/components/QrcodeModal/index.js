@@ -68,7 +68,7 @@ const QrcodeModal = ({ open, onClose, whatsAppId }) => {
               4 - Aponte seu celular para essa tela para capturar o QR Code
             </Typography>
           </div>
-          <div>
+          <div style={{backgroundColor: "white", padding: "1rem", borderRadius: "1rem"}}>
             {qrCode ? (
               <QRCode value={qrCode} size={256} />
             ) : (

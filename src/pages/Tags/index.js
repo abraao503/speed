@@ -37,6 +37,7 @@ import { Chip } from "@material-ui/core";
 import { Tooltip } from "@material-ui/core";
 import { SocketContext } from "../../context/Socket/SocketContext";
 import { AuthContext } from "../../context/Auth/AuthContext";
+import { useTheme } from "@mui/material";
 
 const reducer = (state, action) => {
   if (action.type === "LOAD_TAGS") {
@@ -93,6 +94,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Tags = () => {
   const classes = useStyles();
+  const theme = useTheme();
 
   const { user } = useContext(AuthContext);
 
@@ -199,7 +201,7 @@ const Tags = () => {
     }
   };
 
-return (
+  return (
     <MainContainer>
       <ConfirmationModal
         title={deletingTag && `${i18n.t("tags.confirmationModal.deleteTitle")}`}
@@ -219,28 +221,29 @@ return (
       <MainHeader>
         <Title>{i18n.t("tags.title")}</Title>
         <MainHeaderButtonsWrapper>
-          <TextField
-            placeholder={i18n.t("contacts.searchPlaceholder")}
-            type="search"
-            value={searchParam}
-            onChange={handleSearch}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon style={{ color: "gray" }} />
-                </InputAdornment>
-              ),
-            }}
-          />
           <Button
             variant="contained"
             color="primary"
             onClick={handleOpenTagModal}
           >
             {i18n.t("tags.buttons.add")}
-          </Button>		  
+          </Button>
         </MainHeaderButtonsWrapper>
       </MainHeader>
+      <TextField
+        placeholder={i18n.t("contacts.searchPlaceholder")}
+        type="search"
+        value={searchParam}
+        style={{ margin: theme.spacing(1) }}
+        onChange={handleSearch}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon style={{ color: "gray" }} />
+            </InputAdornment>
+          ),
+        }}
+      />
       <Paper
         className={classes.mainPaper}
         variant="outlined"

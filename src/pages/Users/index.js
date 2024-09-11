@@ -29,6 +29,7 @@ import UserModal from "../../components/UserModal";
 import ConfirmationModal from "../../components/ConfirmationModal";
 import toastError from "../../errors/toastError";
 import { SocketContext } from "../../context/Socket/SocketContext";
+import { useTheme } from "@mui/material";
 
 const reducer = (state, action) => {
   if (action.type === "LOAD_USERS") {
@@ -185,13 +186,14 @@ const Users = () => {
     }
   };
 
+  const theme = useTheme();
+
   return (
     <MainContainer>
       <ConfirmationModal
         title={
           deletingUser &&
-          `${i18n.t("users.confirmationModal.deleteTitle")} ${
-            deletingUser.name
+          `${i18n.t("users.confirmationModal.deleteTitle")} ${deletingUser.name
           }?`
         }
         open={confirmModalOpen}
@@ -209,19 +211,6 @@ const Users = () => {
       <MainHeader>
         <Title>{i18n.t("users.title")}</Title>
         <MainHeaderButtonsWrapper>
-          <TextField
-            placeholder={i18n.t("contacts.searchPlaceholder")}
-            type="search"
-            value={searchParam}
-            onChange={handleSearch}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon style={{ color: "gray" }} />
-                </InputAdornment>
-              ),
-            }}
-          />
           <Button
             variant="contained"
             color="primary"
@@ -231,6 +220,20 @@ const Users = () => {
           </Button>
         </MainHeaderButtonsWrapper>
       </MainHeader>
+      <TextField
+        placeholder={i18n.t("contacts.searchPlaceholder")}
+        type="search"
+        value={searchParam}
+        onChange={handleSearch}
+        style={{ margin: theme.spacing(1) }}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon style={{ color: "gray" }} />
+            </InputAdornment>
+          ),
+        }}
+      />
       <Paper
         className={classes.mainPaper}
         variant="outlined"
@@ -239,7 +242,7 @@ const Users = () => {
         <Table size="small">
           <TableHead>
             <TableRow>
-			<TableCell align="center">
+              <TableCell align="center">
                 {i18n.t("users.table.id")}
               </TableCell>
               <TableCell align="center">{i18n.t("users.table.name")}</TableCell>
@@ -258,7 +261,7 @@ const Users = () => {
             <>
               {users.map((user) => (
                 <TableRow key={user.id}>
-				  <TableCell align="center">{user.id}</TableCell>
+                  <TableCell align="center">{user.id}</TableCell>
                   <TableCell align="center">{user.name}</TableCell>
                   <TableCell align="center">{user.email}</TableCell>
                   <TableCell align="center">{user.profile}</TableCell>

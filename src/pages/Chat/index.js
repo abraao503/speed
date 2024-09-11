@@ -105,7 +105,7 @@ export function ChatModal({
         handleLoadNewChat(data);
       }
       handleClose();
-    } catch (err) {}
+    } catch (err) { }
   };
 
   return (
@@ -291,7 +291,7 @@ function Chat(props) {
       setMessagesPage(1);
       setCurrentChat(chat);
       setTab(1);
-    } catch (err) {}
+    } catch (err) { }
   };
 
   const sendMessage = async (contentMessage) => {
@@ -300,14 +300,14 @@ function Chat(props) {
       await api.post(`/chats/${currentChat.id}/messages`, {
         message: contentMessage,
       });
-    } catch (err) {}
+    } catch (err) { }
     setLoading(false);
   };
 
   const deleteChat = async (chat) => {
     try {
       await api.delete(`/chats/${chat.id}`);
-    } catch (err) {}
+    } catch (err) { }
   };
 
   const findMessages = async (chatId) => {
@@ -319,7 +319,7 @@ function Chat(props) {
       setMessagesPage((prev) => prev + 1);
       setMessagesPageInfo(data);
       setMessages((prev) => [...data.records, ...prev]);
-    } catch (err) {}
+    } catch (err) { }
     setLoading(false);
   };
 
@@ -416,6 +416,10 @@ function Chat(props) {
               loading={loading}
               handleSelectChat={(chat) => selectChat(chat)}
               handleDeleteChat={(chat) => deleteChat(chat)}
+              handleEditChat={() => {
+                setDialogType("edit");
+                setShowDialog(true);
+              }}
             />
           </Grid>
         )}

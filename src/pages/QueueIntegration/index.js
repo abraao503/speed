@@ -28,8 +28,6 @@ import {
   Edit
 } from "@material-ui/icons";
 
-import SearchIcon from "@material-ui/icons/Search";
-
 import MainContainer from "../../components/MainContainer";
 import MainHeader from "../../components/MainHeader";
 import MainHeaderButtonsWrapper from "../../components/MainHeaderButtonsWrapper";
@@ -44,6 +42,7 @@ import toastError from "../../errors/toastError";
 import { AuthContext } from "../../context/Auth/AuthContext";
 import usePlans from "../../hooks/usePlans";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { Search } from "react-feather";
 
 const reducer = (state, action) => {
   if (action.type === "LOAD_INTEGRATIONS") {
@@ -102,6 +101,9 @@ const useStyles = makeStyles((theme) => ({
     height: "40px",
     borderRadius: 4
   },
+  searchInput: {
+    margin: theme.spacing(1)
+  }
 }));
 
 const QueueIntegration = () => {
@@ -247,19 +249,6 @@ const QueueIntegration = () => {
       <MainHeader>
         <Title>{i18n.t("queueIntegration.title")} ({queueIntegration.length})</Title>
         <MainHeaderButtonsWrapper>
-          <TextField
-            placeholder={i18n.t("queueIntegration.searchPlaceholder")}
-            type="search"
-            value={searchParam}
-            onChange={handleSearch}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon color="secondary" />
-                </InputAdornment>
-              ),
-            }}
-          />
           <Button
             variant="contained"
             color="primary"
@@ -269,6 +258,21 @@ const QueueIntegration = () => {
           </Button>
         </MainHeaderButtonsWrapper>
       </MainHeader>
+      <TextField
+        placeholder={i18n.t("queueIntegration.searchPlaceholder")}
+        type="search"
+        value={searchParam}
+        className={classes.searchInput}
+        onChange={handleSearch}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Search size={18} />
+            </InputAdornment>
+          ),
+        }}
+      />
+
       <Paper
         className={classes.mainPaper}
         variant="outlined"
@@ -287,7 +291,7 @@ const QueueIntegration = () => {
               {queueIntegration.map((integration) => (
                 <TableRow key={integration.id}>
                   <TableCell >
-                    {integration.type === "dialogflow" && (<Avatar 
+                    {integration.type === "dialogflow" && (<Avatar
                       src={dialogflow} className={classes.avatar} />)}
                     {integration.type === "n8n" && (<Avatar
                       src={n8n} className={classes.avatar} />)}

@@ -34,7 +34,7 @@ function ListItemLink(props) {
   const { icon, primary, to, className } = props;
 
   const renderLink = React.useMemo(
-    () =>
+    () =>     
       React.forwardRef((itemProps, ref) => (
         <RouterLink to={to} ref={ref} {...itemProps} />
       )),
@@ -150,17 +150,16 @@ const MainListItems = (props) => {
   }, [searchParam]);
 
   useEffect(() => {
-    async function fetchData() {
-      const companyId = user.companyId;
-      const planConfigs = await getPlanCompany(undefined, companyId);
-
-      setShowCampaigns(planConfigs.plan.useCampaigns);
-      setShowKanban(planConfigs.plan.useKanban);
-      setShowOpenAi(planConfigs.plan.useOpenAi);
-      setShowIntegrations(planConfigs.plan.useIntegrations);
-      setShowSchedules(planConfigs.plan.useSchedules);
-      setShowInternalChat(planConfigs.plan.useInternalChat);
-      setShowExternalApi(planConfigs.plan.useExternalApi);
+    function fetchData() {
+      const { company: { plan } } = user 
+            
+      setShowCampaigns(plan.useCampaigns);
+      setShowKanban(plan.useKanban);
+      setShowOpenAi(plan.useOpenAi);
+      setShowIntegrations(plan.useIntegrations);
+      setShowSchedules(plan.useSchedules);
+      setShowInternalChat(plan.useInternalChat);
+      setShowExternalApi(plan.useExternalApi);
     }
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps

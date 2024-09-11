@@ -27,16 +27,21 @@ import notifySound from "../../assets/chat_notify.mp3";
 import useSound from "use-sound";
 import { i18n } from "../../translate/i18n";
 import { MessageSquare } from "react-feather";
+import { Tooltip } from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
   mainPaper: {
     flex: 1,
     maxHeight: 300,
     maxWidth: 500,
+    backgroundColor: theme.palette.background.default,
     padding: theme.spacing(1),
     overflowY: "scroll",
     ...theme.scrollbarStyles,
   },
+  paperItem: {
+    marginBottom: theme.spacing(1)
+  }
 }));
 
 const reducer = (state, action) => {
@@ -141,9 +146,9 @@ export default function ChatPopover() {
     const companyId = localStorage.getItem("companyId");
     const socket = socketManager.getSocket(companyId);
     if (!socket) {
-      return () => {}; 
+      return () => { };
     }
-    
+
     socket.on(`company-${companyId}-chat`, (data) => {
       if (data.action === "new-message") {
         dispatch({ type: "CHANGE_CHAT", payload: data });
@@ -223,17 +228,19 @@ export default function ChatPopover() {
 
   return (
     <div>
-      <IconButton
-        aria-describedby={id}
-        variant="contained"
-        color={invisible ? "default" : "inherit"}
-        onClick={handleClick}
-        style={{ color: "white", padding: 8 }}
-      >
-        <Badge color="secondary" variant="dot" invisible={invisible}>
-          <MessageSquare size={22} />
-        </Badge>
-      </IconButton>
+      <Tooltip title="Chat interno">
+        <IconButton
+          aria-describedby={id}
+          variant="contained"
+          color={invisible ? "default" : "inherit"}
+          onClick={handleClick}
+          style={{ color: "white", padding: 8 }}
+        >
+          <Badge color="secondary" variant="dot" invisible={invisible}>
+            <MessageSquare size={22} />
+          </Badge>
+        </IconButton>
+      </Tooltip>
       <Popover
         id={id}
         open={open}
@@ -260,28 +267,30 @@ export default function ChatPopover() {
           >
             {isArray(chats) &&
               chats.map((item, key) => (
-                <ListItem
+                <Paper
+                  className={classes.paperItem}
                   key={key}
-                  style={{
-                    background: key % 2 === 0 ? "#ededed" : "white",
-                    border: "1px solid #eee",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => goToMessages(item)}
-                  button
                 >
-                  <ListItemText
-                    primary={item.lastMessage}
-                    secondary={
-                      <>
-                        <Typography component="span" style={{ fontSize: 12 }}>
-                          {datetimeToClient(item.updatedAt)}
-                        </Typography>
-                        <span style={{ marginTop: 5, display: "block" }}></span>
-                      </>
-                    }
-                  />
-                </ListItem>
+                  <ListItem
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    onClick={() => goToMessages(item)}
+                    button
+                  >
+                    <ListItemText
+                      primary={item.lastMessage}
+                      secondary={
+                        <>
+                          <Typography component="span" style={{ fontSize: 12 }}>
+                            {datetimeToClient(item.updatedAt)}
+                          </Typography>
+                          <span style={{ marginTop: 5, display: "block" }}></span>
+                        </>
+                      }
+                    />
+                  </ListItem>
+                </Paper>
               ))}
             {isArray(chats) && chats.length === 0 && (
               <ListItemText primary={i18n.t("mainDrawer.appBar.notRegister")} />

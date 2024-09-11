@@ -4,7 +4,7 @@ const messages = {
       signup: {
         title: "Cadastre-se",
         toasts: {
-          success: "Usuário criado com sucesso! Faça seu login!!!.",
+          success: "Usuário criado com sucesso. Faça seu login!",
           fail: "Erro ao criar usuário. Verifique os dados informados.",
         },
         form: {
@@ -25,7 +25,7 @@ const messages = {
         },
         buttons: {
           submit: "Entrar",
-          register: "Registre-se, agora mesmo!",
+          register: "Registre-se agora mesmo!",
         },
       },
       plans: {
@@ -77,12 +77,11 @@ const messages = {
           deleteTitle: "Deletar",
           deleteMessage: "Você tem certeza? Essa ação não pode ser revertida.",
           disconnectTitle: "Desconectar",
-          disconnectMessage:
-            "Tem certeza? Você precisará ler o QR Code novamente.",
+          disconnectMessage: "Tem certeza? Você precisará ler o QR Code novamente.",
         },
         buttons: {
           add: "Adicionar WhatsApp",
-          disconnect: "desconectar",
+          disconnect: "Desconectar",
           tryAgain: "Tentar novamente",
           qrcode: "QR CODE",
           newQr: "Novo QR CODE",
@@ -90,7 +89,7 @@ const messages = {
         },
         toolTips: {
           disconnected: {
-            title: "Falha ao iniciar sessão do WhatsApp",
+            title: "Falha ao iniciar sessão do WhatsApp.",
             content:
               "Certifique-se de que seu celular esteja conectado à internet e tente novamente, ou solicite um novo QR Code",
           },
@@ -103,7 +102,7 @@ const messages = {
             title: "Conexão estabelecida!",
           },
           timeout: {
-            title: "A conexão com o celular foi perdida",
+            title: "A conexão com o celular foi perdida.",
             content:
               "Certifique-se de que seu celular esteja conectado à internet e o WhatsApp esteja aberto, ou clique no botão 'Desconectar' para obter um novo QR Code",
           },
@@ -134,14 +133,14 @@ const messages = {
           default: "Padrão",
           sendIdQueue: "Fila",
           timeSendQueue: "Redirecionar para fila em X minutos",
-          queueRedirection: "Redirecionamento de Fila",
+          queueRedirection: "Redirecionamento de fila",
           outOfHoursMessage: "Mensagem de fora de expediente",
           queueRedirectionDesc:
             "Selecione uma fila para os contatos que não possuem fila serem redirecionados",
           prompt: "Prompt",
           //maxUseBotQueues: "Enviar bot x vezes",
           //timeUseBotQueues: "Intervalo em minutos entre envio de bot",
-          expiresTicket: "Encerrar chats abertos após x minutos",
+          expiresTicket: "Encerrar chats abertos após X minutos",
           expiresInactiveMessage: "Mensagem de encerramento por inatividade",
           greetingMessage: "Mensagem de saudação",
           complationMessage: "Mensagem de conclusão",
@@ -155,7 +154,7 @@ const messages = {
         success: "WhatsApp salvo com sucesso.",
       },
       qrCode: {
-        message: "Leia o QrCode para iniciar a sessão",
+        message: "Leia o QRCode para iniciar a sessão",
       },
       contacts: {
         title: "Contatos",
@@ -167,7 +166,7 @@ const messages = {
         searchPlaceholder: "Pesquisar...",
         confirmationModal: {
           deleteTitle: "Deletar ",
-          deleteAllTitle: "Deletar Todos",
+          deleteAllTitle: "Deletar todos",
           importTitle: "Importar contatos",
           deleteMessage:
             "Tem certeza que deseja deletar este contato? Todos os tickets relacionados serão perdidos.",
@@ -176,10 +175,10 @@ const messages = {
           importMessage: "Deseja importar todos os contatos do telefone?",
         },
         buttons: {
-          import: "Importar Contatos",
-          add: "Adicionar Contato",
-          export: "Exportar Contatos",
-          delete: "Excluir Todos Contatos",
+          import: "Importar contatos",
+          add: "Adicionar contato",
+          export: "Exportar contatos",
+          delete: "Excluir todos contatos",
         },
         table: {
           name: "Nome",
@@ -194,7 +193,7 @@ const messages = {
           edit: "Editar projeto",
         },
         form: {
-          id: "ID",
+          id: "Id",
           type: "Tipo",
           name: "Nome",
           projectName: "Nome do Projeto",
@@ -237,7 +236,7 @@ const messages = {
           max_tokens: "Máximo de Tokens na resposta",
           temperature: "Temperatura",
           apikey: "API Key",
-          max_messages: "Máximo de mensagens no Histórico",
+          max_messages: "Máximo de mensagens no histórico",
           voiceKey: "Chave da API de Voz",
           voiceRegion: "Região de Voz",
         },
@@ -325,7 +324,7 @@ const messages = {
           profile: "Perfil",
           whatsapp: "Conexão Padrão",
 
-          allTicket: "Ticket Sem Fila [Invisível]",
+          allTicket: "Ticket Sem Fila (Invisível)",
           allTicketEnabled: "Habilitado",
           allTicketDesabled: "Desabilitado",
         },
@@ -368,14 +367,14 @@ const messages = {
           okEdit: "Salvar",
           cancel: "Cancelar",
         },
-        success: "Tag salvo com sucesso.",
+        success: "Tag salva com sucesso.",
       },
       chat: {
         noTicketMessage: "Selecione um ticket para começar a conversar.",
       },
       uploads: {
         titles: {
-          titleUploadMsgDragDrop: "ARRASTE E SOLTE ARQUIVOS NO CAMPO ABAIXO",
+          titleUploadMsgDragDrop: "Arraste e solte arquivos no campo abaixo",
           titleFileList: "Lista de arquivo(s)",
         },
       },
@@ -389,7 +388,7 @@ const messages = {
       },
       tickets: {
         toasts: {
-          deleted: "O atendimento que você estava foi deletado.",
+          deleted: "O atendimento em que você estava foi deletado.",
         },
         notification: {
           message: "Mensagem de",
@@ -490,7 +489,7 @@ const messages = {
         confirmationModal: {
           deleteTitle: "Excluir",
           deleteMessage:
-            "Você tem certeza? Essa ação não pode ser revertida! e será removida das filas e conexões vinculadas",
+            "Você tem certeza? Essa ação não pode ser revertida! Essa mensagem será removida das filas e conexões vinculadas",
         },
       },
       files: {
@@ -712,7 +711,7 @@ const messages = {
         title: "Informativos",
         searchPlaceholder: "Pesquisa",
         buttons: {
-          add: "Novo Informativo",
+          add: "Criar novo",
           contactLists: "Listas de Informativos",
         },
         table: {
@@ -796,7 +795,7 @@ const messages = {
         confirmationModal: {
           deleteTitle: "Excluir",
           deleteMessage:
-            "Todos os dados do usuário serão perdidos. Os atendimento abertos deste usuário serão movidos para a fila.",
+            "Todos os dados do usuário serão perdidos. Os atendimentos abertos deste usuário serão movidos para a fila.",
         },
       },
       helps: {
@@ -805,7 +804,7 @@ const messages = {
       schedules: {
         title: "Agendamentos",
         confirmationModal: {
-          deleteTitle: "Você tem certeza que quer excluir este Agendamento?",
+          deleteTitle: "Você tem certeza que quer excluir este agendamento?",
           deleteMessage: "Esta ação não pode ser revertida.",
         },
         table: {
@@ -826,9 +825,9 @@ const messages = {
       tags: {
         title: "Tags",
         confirmationModal: {
-          deleteTitle: "Você tem certeza que quer excluir esta Tag?",
+          deleteTitle: "Você tem certeza que quer excluir esta tag?",
           deleteMessage: "Esta ação não pode ser revertida.",
-          deleteAllMessage: "Tem certeza que deseja deletar todas as Tags?",
+          deleteAllMessage: "Tem certeza que deseja deletar todas as tags?",
           deleteAllTitle: "Deletar Todos",
         },
         table: {
@@ -842,7 +841,7 @@ const messages = {
           deleteAll: "Deletar Todas",
         },
         toasts: {
-          deletedAll: "Todas Tags excluídas com sucesso!",
+          deletedAll: "Todas tags excluídas com sucesso!",
           deleted: "Tag excluído com sucesso.",
         },
       },
@@ -871,7 +870,7 @@ const messages = {
         },
       },
       messagesInput: {
-        placeholderOpen: "Digite uma mensagem",
+        placeholderOpen: "Digite uma mensagem...",
         placeholderClosed:
           "Reabra ou aceite esse ticket para enviar uma mensagem.",
         signMessage: "Assinar",
@@ -954,25 +953,25 @@ const messages = {
         ERR_SENDING_WAPP_MSG:
           "Erro ao enviar mensagem do WhatsApp. Verifique a página de conexões.",
         ERR_DELETE_WAPP_MSG: "Não foi possível excluir a mensagem do WhatsApp.",
-        ERR_OTHER_OPEN_TICKET: "Já existe um tíquete aberto para este contato.",
-        ERR_SESSION_EXPIRED: "Sessão expirada. Por favor entre.",
+        ERR_OTHER_OPEN_TICKET: "Já existe um ticket aberto para este contato.",
+        ERR_SESSION_EXPIRED: "Sessão expirada. Por favor, faça login.",
         ERR_USER_CREATION_DISABLED:
           "A criação do usuário foi desabilitada pelo administrador.",
         ERR_NO_PERMISSION: "Você não tem permissão para acessar este recurso.",
         ERR_DUPLICATED_CONTACT: "Já existe um contato com este número.",
         ERR_NO_SETTING_FOUND: "Nenhuma configuração encontrada com este ID.",
         ERR_NO_CONTACT_FOUND: "Nenhum contato encontrado com este ID.",
-        ERR_NO_TICKET_FOUND: "Nenhum tíquete encontrado com este ID.",
+        ERR_NO_TICKET_FOUND: "Nenhum ticket encontrado com este ID.",
         ERR_NO_USER_FOUND: "Nenhum usuário encontrado com este ID.",
         ERR_NO_WAPP_FOUND: "Nenhum WhatsApp encontrado com este ID.",
         ERR_CREATING_MESSAGE: "Erro ao criar mensagem no banco de dados.",
-        ERR_CREATING_TICKET: "Erro ao criar tíquete no banco de dados.",
+        ERR_CREATING_TICKET: "Erro ao criar ticket no banco de dados.",
         ERR_FETCH_WAPP_MSG:
-          "Erro ao buscar a mensagem no WhtasApp, talvez ela seja muito antiga.",
+          "Erro ao buscar a mensagem no WhatsApp, talvez ela seja muito antiga.",
         ERR_QUEUE_COLOR_ALREADY_EXISTS:
           "Esta cor já está em uso, escolha outra.",
         ERR_WAPP_GREETING_REQUIRED:
-          "A mensagem de saudação é obrigatório quando há mais de uma fila.",
+          "A mensagem de saudação é obrigatória quando há mais de uma fila.",
       },
     },
   },

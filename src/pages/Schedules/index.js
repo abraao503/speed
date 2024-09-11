@@ -33,6 +33,8 @@ import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import EditIcon from "@material-ui/icons/Edit";
 
 import "./Schedules.css"; // Importe o arquivo CSS
+import { useTheme } from "@mui/material";
+import { Edit2, Trash } from "react-feather";
 
 // Defina a função getUrlParam antes de usá-la
 function getUrlParam(paramName) {
@@ -71,7 +73,10 @@ var defaultMessages = {
 
 const reducer = (state, action) => {
   if (action.type === "LOAD_SCHEDULES") {
-    return action.payload;
+    const newSchedules = action.payload.filter(
+      (newSchedule) => !state.some((schedule) => schedule.id === newSchedule.id)
+    );
+    return [...state, ...newSchedules];
   }
 
   if (action.type === "UPDATE_SCHEDULES") {
@@ -104,6 +109,52 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     overflowY: "scroll",
     ...theme.scrollbarStyles,
+
+    '& .rbc-calendar': {
+      fontFamily: "Inter"
+    },
+
+    '& .rbc-toolbar button': {
+      fontFamily: "Inter",
+      border: `1px solid ${theme.palette.calendarBorder}`,
+      color: "inherit",
+      backgroundColor: "inherit",
+      cursor: "pointer"
+    },
+
+    '& .rbc-active': {
+      backgroundColor: `${theme.palette.calendarToday} !important`,
+      color: `${theme.palette.common.white} !important`,
+    },
+
+    '& .rbc-active:hover': {
+      color: `${theme.palette.common.white} !important`,
+    },
+
+    '& .rbc-active:focus': {
+      color: `${theme.palette.common.white} !important`,
+    },
+
+    '& .rbc-today': {
+      backgroundColor: theme.palette.calendarToday,
+    },
+
+    '& .rbc-today.rbc-header': {
+      color: theme.palette.common.white,
+    },
+
+    '& .rbc-current': {
+      color: theme.palette.common.white,
+    },
+
+    '& .rbc-off-range-bg': {
+      backgroundColor: theme.palette.calendarOffRange
+    },
+
+    '& .rbc-event': {
+      backgroundColor: theme.palette.calendarEventBackground,
+      color: theme.palette.light.main
+    }
   },
 }));
 
@@ -129,7 +180,6 @@ const Schedules = () => {
       const { data } = await api.get("/schedules/", {
         params: { searchParam, pageNumber },
       });
-
       dispatch({ type: "LOAD_SCHEDULES", payload: data.schedules });
       setHasMore(data.hasMore);
       setLoading(false);
@@ -242,6 +292,8 @@ const Schedules = () => {
     return str;
   };
 
+  const theme = useTheme();
+
   return (
     <MainContainer>
       <ConfirmationModal
@@ -269,19 +321,6 @@ const Schedules = () => {
           {i18n.t("schedules.title")} ({schedules.length})
         </Title>
         <MainHeaderButtonsWrapper>
-          <TextField
-            placeholder={i18n.t("contacts.searchPlaceholder")}
-            type="search"
-            value={searchParam}
-            onChange={handleSearch}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon style={{ color: "gray" }} />
-                </InputAdornment>
-              ),
-            }}
-          />
           <Button
             variant="contained"
             color="primary"
@@ -291,11 +330,21 @@ const Schedules = () => {
           </Button>
         </MainHeaderButtonsWrapper>
       </MainHeader>
-      <Paper
-        className={classes.mainPaper}
-        variant="outlined"
-        onScroll={handleScroll}
-      >
+      <TextField
+        placeholder={i18n.t("contacts.searchPlaceholder")}
+        type="search"
+        style={{ margin: theme.spacing(1) }}
+        value={searchParam}
+        onChange={handleSearch}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          ),
+        }}
+      />
+      <Paper className={classes.mainPaper} variant="outlined" onScroll={handleScroll}>
         <Calendar
           messages={defaultMessages}
           formats={{
@@ -307,11 +356,13 @@ const Schedules = () => {
             title: (
               <div className="event-container">
                 <div style={eventTitleStyle}>{schedule.contact.name}</div>
-                <DeleteOutlineIcon
+                <Trash
+                  size={18}
                   onClick={() => handleDeleteSchedule(schedule.id)}
                   className="delete-icon"
                 />
-                <EditIcon
+                <Edit2
+                  size={18}
                   onClick={() => {
                     handleEditSchedule(schedule);
                     setScheduleModalOpen(true);
@@ -325,7 +376,7 @@ const Schedules = () => {
           }))}
           startAccessor="start"
           endAccessor="end"
-          style={{ height: 500 }}
+          style={{ height: "100%" }}
         />
       </Paper>
     </MainContainer>

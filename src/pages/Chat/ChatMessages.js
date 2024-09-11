@@ -15,7 +15,8 @@ import { AuthContext } from "../../context/Auth/AuthContext";
 import { useDate } from "../../hooks/useDate";
 import api from "../../services/api";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => (
+  {
   mainContainer: {
     display: "flex",
     flexDirection: "column",
@@ -27,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
     borderLeft: "1px solid rgba(0, 0, 0, 0.12)",
   },
   messageList: {
+    color: theme.palette.internalChatMessageFontColor,
     position: "relative",
     overflowY: "auto",
     height: "100%",
@@ -47,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px 10px 5px",
     margin: "10px",
     position: "relative",
-    backgroundColor: "blue",
+    backgroundColor: "#ffffff",
     maxWidth: 300,
     borderRadius: 10,
     borderBottomLeftRadius: 0,
@@ -57,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px 10px 5px",
     margin: "10px 10px 10px auto",
     position: "relative",
-    backgroundColor: "green", //DARK MODE PLW DESIGN//
+    backgroundColor: "#e1ffc7", //DARK MODE PLW DESIGN//
     textAlign: "right",
     maxWidth: 300,
     borderRadius: 10,
@@ -122,7 +124,7 @@ export default function ChatMessages({
             if (item.senderId === user.id) {
               return (
                 <Box key={key} className={classes.boxRight}>
-                  <Typography variant="subtitle2">
+                  <Typography fontWeight="fontWeightMedium" variant="subtitle2">
                     {item.sender.name}
                   </Typography>
                   {item.message}
@@ -134,7 +136,7 @@ export default function ChatMessages({
             } else {
               return (
                 <Box key={key} className={classes.boxLeft}>
-                  <Typography variant="subtitle2">
+                  <Typography fontWeight="fontWeightMedium" variant="subtitle2">
                     {item.sender.name}
                   </Typography>
                   {item.message}
