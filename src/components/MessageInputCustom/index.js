@@ -78,6 +78,10 @@ const useStyles = makeStyles((theme) => ({
     display: "none",
   },
 
+  cancelMediaUpload: {
+    color: theme.palette.primary.dark
+  },
+
   viewMediaInputWrapper: {
     display: "flex",
     padding: "10px 13px",
@@ -718,7 +722,7 @@ const MessageInputCustom = (props) => {
             <CircularProgress className={classes.circleLoading} />
           </div>
         ) : (
-          <span>
+          <span className={classes.cancelMediaUpload}>
             {medias[0]?.name}
             {/* <img src={media.preview} alt=""></img> */}
           </span>
