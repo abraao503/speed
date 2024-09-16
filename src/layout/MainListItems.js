@@ -20,7 +20,29 @@ import { makeStyles } from "@material-ui/core/styles";
 import usePlans from "../hooks/usePlans";
 import Typography from "@material-ui/core/Typography";
 import useVersion from "../hooks/useVersion";
-import { Columns, Grid, Zap, List as ListFeather, Users, Calendar, Tag, MessageSquare, HelpCircle, Send, ChevronDown, ChevronUp, Settings, Info, Globe, GitBranch, Wifi, Paperclip, GitPullRequest, Code, DollarSign } from "react-feather";
+import {
+  Columns,
+  Grid,
+  Zap,
+  List as ListFeather,
+  Users,
+  Calendar,
+  Tag,
+  MessageSquare,
+  HelpCircle,
+  Send,
+  ChevronDown,
+  ChevronUp,
+  Settings,
+  Info,
+  Globe,
+  GitBranch,
+  Wifi,
+  Paperclip,
+  GitPullRequest,
+  Code,
+  DollarSign,
+} from "react-feather";
 
 const useStyles = makeStyles((theme) => ({
   ListSubheader: {
@@ -34,7 +56,7 @@ function ListItemLink(props) {
   const { icon, primary, to, className } = props;
 
   const renderLink = React.useMemo(
-    () =>     
+    () =>
       React.forwardRef((itemProps, ref) => (
         <RouterLink to={to} ref={ref} {...itemProps} />
       )),
@@ -44,7 +66,9 @@ function ListItemLink(props) {
   return (
     <li>
       <ListItem button dense component={renderLink} className={className}>
-        {icon ? <ListItemIcon style={{minWidth: "40px"}}>{icon}</ListItemIcon> : null}
+        {icon ? (
+          <ListItemIcon style={{ minWidth: "40px" }}>{icon}</ListItemIcon>
+        ) : null}
         <ListItemText primary={primary} />
       </ListItem>
     </li>
@@ -151,8 +175,10 @@ const MainListItems = (props) => {
 
   useEffect(() => {
     function fetchData() {
-      const { company: { plan } } = user 
-            
+      const {
+        company: { plan },
+      } = user;
+
       setShowCampaigns(plan.useCampaigns);
       setShowKanban(plan.useKanban);
       setShowOpenAi(plan.useOpenAi);
@@ -161,7 +187,10 @@ const MainListItems = (props) => {
       setShowInternalChat(plan.useInternalChat);
       setShowExternalApi(plan.useExternalApi);
     }
-    fetchData();
+    if (user?.company?.plan) {
+      fetchData();
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -351,7 +380,7 @@ const MainListItems = (props) => {
         perform="drawer-admin-items:view"
         yes={() => (
           <>
-            <Divider style={{margin: "5px 0"}} />
+            <Divider style={{ margin: "5px 0" }} />
             <ListSubheader
               hidden={collapsed}
               style={{
@@ -373,12 +402,12 @@ const MainListItems = (props) => {
                   button
                   onClick={() => setOpenCampaignSubmenu((prev) => !prev)}
                 >
-                  <ListItemIcon style={{minWidth: "40px"}}>
+                  <ListItemIcon style={{ minWidth: "40px" }}>
                     <Send size={22} />
                   </ListItemIcon>
                   <ListItemText
                     primary={i18n.t("mainDrawer.listItems.campaigns")}
-                    primaryTypographyProps={{style: {fontSize: "14px"}}}
+                    primaryTypographyProps={{ style: { fontSize: "14px" } }}
                   />
                   {openCampaignSubmenu ? (
                     <ChevronUp size={22} />
@@ -401,10 +430,13 @@ const MainListItems = (props) => {
                       button
                       dense
                     >
-                      <ListItemIcon style={{minWidth: "40px"}}>
+                      <ListItemIcon style={{ minWidth: "40px" }}>
                         <ListFeather size={22} />
                       </ListItemIcon>
-                      <ListItemText primary="Listagem" primaryTypographyProps={{style: {fontSize: "14px"}}} />
+                      <ListItemText
+                        primary="Listagem"
+                        primaryTypographyProps={{ style: { fontSize: "14px" } }}
+                      />
                     </ListItem>
                     <ListItem
                       onClick={() => {
@@ -414,10 +446,13 @@ const MainListItems = (props) => {
                       button
                       dense
                     >
-                      <ListItemIcon style={{minWidth: "40px"}}>
+                      <ListItemIcon style={{ minWidth: "40px" }}>
                         <Users size={22} />
                       </ListItemIcon>
-                      <ListItemText primary="Listas de Contatos" primaryTypographyProps={{style: {fontSize: "14px"}}} />
+                      <ListItemText
+                        primary="Listas de Contatos"
+                        primaryTypographyProps={{ style: { fontSize: "14px" } }}
+                      />
                     </ListItem>
                     <ListItem
                       onClick={() => {
@@ -426,10 +461,13 @@ const MainListItems = (props) => {
                       }}
                       button
                     >
-                      <ListItemIcon style={{minWidth: "40px"}}>
+                      <ListItemIcon style={{ minWidth: "40px" }}>
                         <Settings size={22} />
                       </ListItemIcon>
-                      <ListItemText primary="Configurações" primaryTypographyProps={{style: {fontSize: "14px"}}} />
+                      <ListItemText
+                        primary="Configurações"
+                        primaryTypographyProps={{ style: { fontSize: "14px" } }}
+                      />
                     </ListItem>
                   </List>
                 </Collapse>
@@ -529,7 +567,7 @@ const MainListItems = (props) => {
 
             {!collapsed && (
               <React.Fragment>
-                <Divider style={{margin: "5px 0"}}  />
+                <Divider style={{ margin: "5px 0" }} />
                 {/* 
               // IMAGEM NO MENU
               <Hidden only={['sm', 'xs']}>
