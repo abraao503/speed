@@ -400,7 +400,6 @@ const CustomInput = (props) => {
     return i18n.t("messagesInput.placeholderClosed");
   };
 
-
   const setInputRef = (input) => {
     if (input) {
       input.focus();
@@ -425,13 +424,16 @@ const CustomInput = (props) => {
           }
         }}
         onChange={(event, opt) => {
-         
           if (isObject(opt) && has(opt, "value") && isNil(opt.mediaPath)) {
             setInputMessage(opt.value);
             setTimeout(() => {
               inputRef.current.scrollTop = inputRef.current.scrollHeight;
             }, 200);
-          } else if (isObject(opt) && has(opt, "value") && !isNil(opt.mediaPath)) {
+          } else if (
+            isObject(opt) &&
+            has(opt, "value") &&
+            !isNil(opt.mediaPath)
+          ) {
             handleQuickAnswersClick(opt);
 
             setTimeout(() => {
@@ -533,8 +535,12 @@ const MessageInputCustom = (props) => {
       const formData = new FormData();
       const filename = `${new Date().getTime()}.${extension}`;
       formData.append("medias", blob, filename);
-      formData.append("body",  message);
+      formData.append("body", message);
       formData.append("fromMe", true);
+      formData.append(
+        "timezone",
+        Intl.DateTimeFormat().resolvedOptions().timeZone
+      );
 
       await api.post(`/messages/${ticketId}`, formData);
     } catch (err) {
@@ -543,7 +549,7 @@ const MessageInputCustom = (props) => {
     }
     setLoading(false);
   };
-  
+
   const handleQuickAnswersClick = async (value) => {
     if (value.mediaPath) {
       try {
@@ -570,6 +576,10 @@ const MessageInputCustom = (props) => {
 
     const formData = new FormData();
     formData.append("fromMe", true);
+    formData.append(
+      "timezone",
+      Intl.DateTimeFormat().resolvedOptions().timeZone
+    );
     medias.forEach((media) => {
       formData.append("medias", media);
       formData.append("body", media.name);
@@ -639,6 +649,10 @@ const MessageInputCustom = (props) => {
       formData.append("medias", blob, filename);
       formData.append("body", filename);
       formData.append("fromMe", true);
+      formData.append(
+        "timezone",
+        Intl.DateTimeFormat().resolvedOptions().timeZone
+      );
 
       await api.post(`/messages/${ticketId}`, formData);
     } catch (err) {

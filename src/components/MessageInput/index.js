@@ -223,6 +223,10 @@ const MessageInput = ({ ticketStatus }) => {
 
     const formData = new FormData();
     formData.append("fromMe", true);
+    formData.append(
+      "timezone",
+      Intl.DateTimeFormat().resolvedOptions().timeZone
+    );
     medias.forEach((media) => {
       formData.append("medias", media);
       formData.append("body", media.name);
@@ -293,6 +297,10 @@ const MessageInput = ({ ticketStatus }) => {
       formData.append("medias", blob, filename);
       formData.append("body", filename);
       formData.append("fromMe", true);
+      formData.append(
+        "timezone",
+        Intl.DateTimeFormat().resolvedOptions().timeZone
+      );
 
       await api.post(`/messages/${ticketId}`, formData);
     } catch (err) {
