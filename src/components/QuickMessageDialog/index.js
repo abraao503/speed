@@ -25,6 +25,7 @@ import MessageVariablesPicker from "../MessageVariablesPicker";
 import ButtonWithSpinner from "../ButtonWithSpinner";
 
 import {
+    Box,
     FormControl,
     Grid,
     InputLabel,
@@ -115,7 +116,7 @@ const QuickMessageDialog = ({ open, onClose, quickemessageId, reload }) => {
     };
 
     const handleAttachmentFile = (e) => {
-      
+
         const file = head(e.target.files);
         if (file) {
             setAttachment(file);
@@ -270,17 +271,33 @@ const QuickMessageDialog = ({ open, onClose, quickemessageId, reload }) => {
                                         />
                                     </Grid>
                                     {(quickemessage.mediaPath || attachment) && (
-                                        <Grid xs={12} item>
-                                            <Button startIcon={<AttachFileIcon />}>
-                                                {attachment ? attachment.name : quickemessage.mediaName}
+                                        <Box
+                                            display="flex"
+                                            alignItems="center"
+                                            justifyContent="space-between"
+                                            width="100%"
+                                        >
+                                            <Button
+                                                disableTouchRipple
+                                                startIcon={<AttachFileIcon />}
+                                            >
+                                                <p style={{
+                                                    textOverflow: "ellipsis",
+                                                    whiteSpace: "nowrap",
+                                                    overflow: "hidden",
+                                                    flexGrow: 1,
+                                                    minWidth: 0
+                                                }}>
+                                                    {attachment ? attachment.name : quickemessage.mediaName}
+                                                </p>
                                             </Button>
                                             <IconButton
                                                 onClick={() => setConfirmationOpen(true)}
                                                 color="secondary"
                                             >
-                                                <DeleteOutlineIcon color="secondary" />
+                                                <DeleteOutlineIcon />
                                             </IconButton>
-                                        </Grid>
+                                        </Box>
                                     )}
                                 </Grid>
                             </DialogContent>
