@@ -460,6 +460,7 @@ const MainListItems = (props) => {
                         history.push("/campaigns-config");
                       }}
                       button
+                      dense
                     >
                       <ListItemIcon style={{ minWidth: "40px" }}>
                         <Settings size={22} />
