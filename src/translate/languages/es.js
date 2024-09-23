@@ -230,6 +230,7 @@ const messages = {
           form: {
             name: "Nombre",
             prompt: "Prompt",
+            functions: "Funções",
             voice: "Voz",
             max_tokens: "Máximo de Tokens en la respuesta",
             temperature: "Temperatura",

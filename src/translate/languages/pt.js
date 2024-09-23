@@ -77,7 +77,8 @@ const messages = {
           deleteTitle: "Deletar",
           deleteMessage: "Você tem certeza? Essa ação não pode ser revertida.",
           disconnectTitle: "Desconectar",
-          disconnectMessage: "Tem certeza? Você precisará ler o QR Code novamente.",
+          disconnectMessage:
+            "Tem certeza? Você precisará ler o QR Code novamente.",
         },
         buttons: {
           add: "Adicionar WhatsApp",
@@ -232,6 +233,7 @@ const messages = {
         form: {
           name: "Nome",
           prompt: "Prompt",
+          functions: "Funções",
           voice: "Voz",
           max_tokens: "Máximo de Tokens na resposta",
           temperature: "Temperatura",
