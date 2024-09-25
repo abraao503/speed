@@ -233,7 +233,7 @@ const messages = {
             functions: "Funções",
             voice: "Voz",
             max_tokens: "Máximo de Tokens en la respuesta",
-            temperature: "Temperatura (1-200)",
+            temperature: "Temperatura (0-200)",
             apikey: "API Key",
             max_messages: "Máximo de mensajes en el Historial",
             voiceKey: "Clave de la API de Voz",

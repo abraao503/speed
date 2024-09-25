@@ -76,7 +76,7 @@ const PromptSchema = Yup.object().shape({
   max_tokens: Yup.number().required("Informe o número máximo de tokens"),
   temperature: Yup.number()
     .integer("Informe um número inteiro")
-    .min(1, "Informe um número maior que 1")
+    .min(0, "Informe um número maior que 0")
     .max(200, "Informe um número menor que 200")
     .required("Informe a temperatura"),
   apikey: Yup.string().required("Informe a API Key"),
