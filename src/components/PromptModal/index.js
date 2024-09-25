@@ -74,7 +74,11 @@ const PromptSchema = Yup.object().shape({
   functions: Yup.string(),
   voice: Yup.string().required("Informe o modo para Voz"),
   max_tokens: Yup.number().required("Informe o número máximo de tokens"),
-  temperature: Yup.number().required("Informe a temperatura"),
+  temperature: Yup.number()
+    .integer("Informe um número inteiro")
+    .min(1, "Informe um número maior que 1")
+    .max(200, "Informe um número menor que 200")
+    .required("Informe a temperatura"),
   apikey: Yup.string().required("Informe a API Key"),
   queueId: Yup.number().required("Informe a fila"),
   max_messages: Yup.number().required("Informe o número máximo de mensagens"),
@@ -96,7 +100,7 @@ const PromptModal = ({ open, onClose, promptId }) => {
     voiceKey: "",
     voiceRegion: "",
     maxTokens: 100,
-    temperature: 1,
+    temperature: 100,
     apiKey: "",
     queueId: null,
     maxMessages: 10,
@@ -173,6 +177,7 @@ const PromptModal = ({ open, onClose, promptId }) => {
         <Formik
           initialValues={prompt}
           enableReinitialize={true}
+          validationSchema={PromptSchema}
           onSubmit={(values, actions) => {
             setTimeout(() => {
               handleSavePrompt(values);
