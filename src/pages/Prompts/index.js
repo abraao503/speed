@@ -113,9 +113,11 @@ const Prompts = () => {
     async function fetchData() {
       const planConfigs = await getPlanCompany(undefined, companyId);
       if (!planConfigs.plan.useOpenAi) {
-        toast.error("Esta empresa não possui permissão para acessar essa página! Estamos lhe redirecionando.");
+        toast.error(
+          "Esta empresa não possui permissão para acessar essa página! Estamos lhe redirecionando."
+        );
         setTimeout(() => {
-          history.push(`/`)
+          history.push(`/`);
         }, 1000);
       }
     }
@@ -141,7 +143,7 @@ const Prompts = () => {
   useEffect(() => {
     const socket = socketManager.getSocket(companyId);
 
-    socket.on(`company-${companyId}-prompt`, (data) => {
+    socket.on("prompt", (data) => {
       if (data.action === "update" || data.action === "create") {
         dispatch({ type: "UPDATE_PROMPTS", payload: data.prompt });
       }
@@ -188,12 +190,11 @@ const Prompts = () => {
 
   return (
     <MainContainer>
-   
-
       <ConfirmationModal
         title={
           selectedPrompt &&
-          `${i18n.t("prompts.confirmationModal.deleteTitle")} ${selectedPrompt.name
+          `${i18n.t("prompts.confirmationModal.deleteTitle")} ${
+            selectedPrompt.name
           }?`
         }
         open={confirmModalOpen}
@@ -223,9 +224,7 @@ const Prompts = () => {
         <Table size="small">
           <TableHead>
             <TableRow>
-              <TableCell align="left">
-                {i18n.t("prompts.table.name")}
-              </TableCell>
+              <TableCell align="left">{i18n.t("prompts.table.name")}</TableCell>
               <TableCell align="left">
                 {i18n.t("prompts.table.queue")}
               </TableCell>
