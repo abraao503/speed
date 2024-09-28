@@ -78,16 +78,16 @@ const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
     expiresInactiveMessage: "",
     expiresTicket: 0,
     timeUseBotQueues: 0,
-    maxUseBotQueues: 3
+    maxUseBotQueues: 3,
   };
   const [whatsApp, setWhatsApp] = useState(initialState);
   const [selectedQueueIds, setSelectedQueueIds] = useState([]);
   const [queues, setQueues] = useState([]);
-  const [selectedQueueId, setSelectedQueueId] = useState(null)
+  const [selectedQueueId, setSelectedQueueId] = useState(null);
   const [selectedPrompt, setSelectedPrompt] = useState(null);
   const [prompts, setPrompts] = useState([]);
-  
-    useEffect(() => {
+
+  useEffect(() => {
     const fetchSession = async () => {
       if (!whatsAppId) return;
 
@@ -97,7 +97,8 @@ const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
 
         const whatsQueueIds = data.queues?.map((queue) => queue.id);
         setSelectedQueueIds(whatsQueueIds);
-		setSelectedQueueId(data.transferQueueId);
+        setSelectedQueueId(data.transferQueueId);
+        setSelectedPrompt(data.promptId);
       } catch (err) {
         toastError(err);
       }
@@ -128,9 +129,11 @@ const WhatsAppModal = ({ open, onClose, whatsAppId }) => {
   }, []);
 
   const handleSaveWhatsApp = async (values) => {
-const whatsappData = {
-      ...values, queueIds: selectedQueueIds, transferQueueId: selectedQueueId,
-      promptId: selectedPrompt ? selectedPrompt : null
+    const whatsappData = {
+      ...values,
+      queueIds: selectedQueueIds,
+      transferQueueId: selectedQueueId,
+      promptId: selectedPrompt ? selectedPrompt : null,
     };
     delete whatsappData["queues"];
     delete whatsappData["session"];
@@ -161,7 +164,7 @@ const whatsappData = {
   const handleClose = () => {
     onClose();
     setWhatsApp(initialState);
-	  setSelectedQueueId(null);
+    setSelectedQueueId(null);
     setSelectedQueueIds([]);
   };
 
@@ -314,14 +317,8 @@ const whatsappData = {
                   selectedQueueIds={selectedQueueIds}
                   onChange={(selectedIds) => handleChangeQueue(selectedIds)}
                 />
-                <FormControl
-                  margin="dense"
-                  variant="outlined"
-                  fullWidth
-                >
-                  <InputLabel>
-                    {i18n.t("whatsappModal.form.prompt")}
-                  </InputLabel>
+                <FormControl margin="dense" variant="outlined" fullWidth>
+                  <InputLabel>{i18n.t("whatsappModal.form.prompt")}</InputLabel>
                   <Select
                     labelId="dialog-select-prompt-label"
                     id="dialog-select-prompt"
@@ -342,11 +339,9 @@ const whatsappData = {
                       getContentAnchorEl: null,
                     }}
                   >
+                    <MenuItem value={""}>{"Nenhum"}</MenuItem>
                     {prompts.map((prompt) => (
-                      <MenuItem
-                        key={prompt.id}
-                        value={prompt.id}
-                      >
+                      <MenuItem key={prompt.id} value={prompt.id}>
                         {prompt.name}
                       </MenuItem>
                     ))}
@@ -355,35 +350,40 @@ const whatsappData = {
                 <div>
                   <h3>{i18n.t("whatsappModal.form.queueRedirection")}</h3>
                   <p>{i18n.t("whatsappModal.form.queueRedirectionDesc")}</p>
-				<Grid container spacing={2}>
-                  <Grid item sm={6} >
-                    <Field
-                      fullWidth
-                      type="number"
-                      as={TextField}
-                      label='Transferir após x (minutos)'
-                      name="timeToTransfer"
-                      error={touched.timeToTransfer && Boolean(errors.timeToTransfer)}
-                      helperText={touched.timeToTransfer && errors.timeToTransfer}
-                      variant="outlined"
-                      margin="dense"
-                      className={classes.textField}
-                      InputLabelProps={{ shrink: values.timeToTransfer ? true : false }}
-                    />
+                  <Grid container spacing={2}>
+                    <Grid item sm={6}>
+                      <Field
+                        fullWidth
+                        type="number"
+                        as={TextField}
+                        label="Transferir após x (minutos)"
+                        name="timeToTransfer"
+                        error={
+                          touched.timeToTransfer &&
+                          Boolean(errors.timeToTransfer)
+                        }
+                        helperText={
+                          touched.timeToTransfer && errors.timeToTransfer
+                        }
+                        variant="outlined"
+                        margin="dense"
+                        className={classes.textField}
+                        InputLabelProps={{
+                          shrink: values.timeToTransfer ? true : false,
+                        }}
+                      />
+                    </Grid>
 
-                  </Grid>
-
-                  <Grid item sm={6}>
-                    <QueueSelect
-                      selectedQueueIds={selectedQueueId}
-                      onChange={(selectedId) => {
-                        setSelectedQueueId(selectedId)
-                      }}
-                      multiple={false}
-                      title={'Fila de Transferência'}
-                    />
-                  </Grid>
-
+                    <Grid item sm={6}>
+                      <QueueSelect
+                        selectedQueueIds={selectedQueueId}
+                        onChange={(selectedId) => {
+                          setSelectedQueueId(selectedId);
+                        }}
+                        multiple={false}
+                        title={"Fila de Transferência"}
+                      />
+                    </Grid>
                   </Grid>
                   <Grid spacing={2} container>
                     {/* ENCERRAR CHATS ABERTOS APÓS X HORAS */}
@@ -395,8 +395,12 @@ const whatsappData = {
                         name="expiresTicket"
                         variant="outlined"
                         margin="dense"
-                        error={touched.expiresTicket && Boolean(errors.expiresTicket)}
-                        helperText={touched.expiresTicket && errors.expiresTicket}
+                        error={
+                          touched.expiresTicket && Boolean(errors.expiresTicket)
+                        }
+                        helperText={
+                          touched.expiresTicket && errors.expiresTicket
+                        }
                       />
                     </Grid>
                   </Grid>
@@ -404,13 +408,21 @@ const whatsappData = {
                   <div>
                     <Field
                       as={TextField}
-                      label={i18n.t("whatsappModal.form.expiresInactiveMessage")}
+                      label={i18n.t(
+                        "whatsappModal.form.expiresInactiveMessage"
+                      )}
                       multiline
                       rows={4}
                       fullWidth
                       name="expiresInactiveMessage"
-                      error={touched.expiresInactiveMessage && Boolean(errors.expiresInactiveMessage)}
-                      helperText={touched.expiresInactiveMessage && errors.expiresInactiveMessage}
+                      error={
+                        touched.expiresInactiveMessage &&
+                        Boolean(errors.expiresInactiveMessage)
+                      }
+                      helperText={
+                        touched.expiresInactiveMessage &&
+                        errors.expiresInactiveMessage
+                      }
                       variant="outlined"
                       margin="dense"
                     />

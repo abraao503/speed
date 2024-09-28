@@ -404,6 +404,7 @@ const QueueModal = ({ open, onClose, queueId }) => {
                             getContentAnchorEl: null,
                           }}
                         >
+                          <MenuItem value={""}>{"Nenhum"}</MenuItem>
                           {prompts.map((prompt) => (
                             <MenuItem key={prompt.id} value={prompt.id}>
                               {prompt.name}
