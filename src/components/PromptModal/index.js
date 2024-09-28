@@ -80,7 +80,6 @@ const PromptSchema = Yup.object().shape({
     .max(200, "Informe um número menor que 200")
     .required("Informe a temperatura"),
   apikey: Yup.string().required("Informe a API Key"),
-  queueId: Yup.number().required("Informe a fila"),
   max_messages: Yup.number().required("Informe o número máximo de mensagens"),
 });
 
@@ -141,7 +140,7 @@ const PromptModal = ({ open, onClose, promptId }) => {
   const handleSavePrompt = async (values) => {
     const promptData = { ...values, voice: selectedVoice };
     if (!values.queueId) {
-      toastError("Informe o setor");
+      toastError("Informe uma fila");
       return;
     }
     try {
@@ -177,7 +176,6 @@ const PromptModal = ({ open, onClose, promptId }) => {
         <Formik
           initialValues={prompt}
           enableReinitialize={true}
-          validationSchema={PromptSchema}
           onSubmit={(values, actions) => {
             setTimeout(() => {
               handleSavePrompt(values);
