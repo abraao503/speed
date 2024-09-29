@@ -22,6 +22,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import EditIcon from "@material-ui/icons/Edit";
+import DragHandleIcon from "@material-ui/icons/DragHandle";
 import MainContainer from "../../components/MainContainer";
 import MainHeader from "../../components/MainHeader";
 import MainHeaderButtonsWrapper from "../../components/MainHeaderButtonsWrapper";
@@ -34,54 +35,10 @@ import TagModal from "../../components/TagModal";
 import ConfirmationModal from "../../components/ConfirmationModal";
 import toastError from "../../errors/toastError";
 import { Chip } from "@material-ui/core";
-import { Tooltip } from "@material-ui/core";
 import { SocketContext } from "../../context/Socket/SocketContext";
 import { AuthContext } from "../../context/Auth/AuthContext";
 import { useTheme } from "@mui/material";
-
-const reducer = (state, action) => {
-  if (action.type === "LOAD_TAGS") {
-    const tags = action.payload;
-    const newTags = [];
-
-    tags.forEach((tag) => {
-      const tagIndex = state.findIndex((s) => s.id === tag.id);
-      if (tagIndex !== -1) {
-        state[tagIndex] = tag;
-      } else {
-        newTags.push(tag);
-      }
-    });
-
-    return [...state, ...newTags];
-  }
-
-  if (action.type === "UPDATE_TAGS") {
-    const tag = action.payload;
-    const tagIndex = state.findIndex((s) => s.id === tag.id);
-
-    if (tagIndex !== -1) {
-      state[tagIndex] = tag;
-      return [...state];
-    } else {
-      return [tag, ...state];
-    }
-  }
-
-  if (action.type === "DELETE_TAG") {
-    const tagId = action.payload;
-
-    const tagIndex = state.findIndex((s) => s.id === tagId);
-    if (tagIndex !== -1) {
-      state.splice(tagIndex, 1);
-    }
-    return [...state];
-  }
-
-  if (action.type === "RESET") {
-    return [];
-  }
-};
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 const useStyles = makeStyles((theme) => ({
   mainPaper: {
@@ -105,7 +62,8 @@ const Tags = () => {
   const [deletingTag, setDeletingTag] = useState(null);
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const [searchParam, setSearchParam] = useState("");
-  const [tags, dispatch] = useReducer(reducer, []);
+  const [tags, setTags] = useState([]);
+
   const [tagModalOpen, setTagModalOpen] = useState(false);
 
   const fetchTags = useCallback(async () => {
@@ -113,7 +71,7 @@ const Tags = () => {
       const { data } = await api.get("/tags/", {
         params: { searchParam, pageNumber },
       });
-      dispatch({ type: "LOAD_TAGS", payload: data.tags });
+      setTags(data.tags);
       setHasMore(data.hasMore);
       setLoading(false);
     } catch (err) {
@@ -124,7 +82,7 @@ const Tags = () => {
   const socketManager = useContext(SocketContext);
 
   useEffect(() => {
-    dispatch({ type: "RESET" });
+    setTags([]);
     setPageNumber(1);
   }, [searchParam]);
 
@@ -141,11 +99,13 @@ const Tags = () => {
 
     socket.on("user", (data) => {
       if (data.action === "update" || data.action === "create") {
-        dispatch({ type: "UPDATE_TAGS", payload: data.tags });
+        setTags(data.tags);
       }
 
       if (data.action === "delete") {
-        dispatch({ type: "DELETE_USER", payload: +data.tagId });
+        setTags((prevState) =>
+          prevState.filter((tag) => tag.id !== data.tagId)
+        );
       }
     });
 
@@ -184,7 +144,7 @@ const Tags = () => {
     setSearchParam("");
     setPageNumber(1);
 
-    dispatch({ type: "RESET" });
+    setTags((prevState) => prevState.filter((tag) => tag.id !== tagId));
     setPageNumber(1);
     await fetchTags();
   };
@@ -199,6 +159,32 @@ const Tags = () => {
     if (scrollHeight - (scrollTop + 100) < clientHeight) {
       loadMore();
     }
+  };
+
+  const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+
+    return result.map((tag, index) => {
+      return { ...tag, order: index + 1 };
+    });
+  };
+
+  const onDragEnd = async (result) => {
+    if (!result.destination) {
+      return;
+    }
+
+    const items = reorder(tags, result.source.index, result.destination.index);
+
+    setTags(items);
+
+    await api.put("/tags/reorder", {
+      tags: items.map((tag) => {
+        return { id: tag.id, order: tag.order };
+      }),
+    });
   };
 
   return (
@@ -216,7 +202,8 @@ const Tags = () => {
         onClose={handleCloseTagModal}
         reload={fetchTags}
         aria-labelledby="form-dialog-title"
-        tagId={selectedTag && selectedTag.id}
+        currentTag={selectedTag}
+        totalTags={tags.length}
       />
       <MainHeader>
         <Title>{i18n.t("tags.title")}</Title>
@@ -249,56 +236,162 @@ const Tags = () => {
         variant="outlined"
         onScroll={handleScroll}
       >
-        <Table size="small">
-          <TableHead>
-            <TableRow>
-              <TableCell align="center">{i18n.t("tags.table.name")}</TableCell>
-              <TableCell align="center">
-                {i18n.t("tags.table.tickets")}
-              </TableCell>
-              <TableCell align="center">
-                {i18n.t("tags.table.actions")}
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <>
-              {tags.map((tag) => (
-                <TableRow key={tag.id}>
-                  <TableCell align="center">
-                    <Chip
-                      variant="outlined"
-                      style={{
-                        backgroundColor: tag.color,
-                        textShadow: "1px 1px 1px #000",
-                        color: "white",
-                      }}
-                      label={tag.name}
-                      size="small"
-                    />
-                  </TableCell>
-                  <TableCell align="center">{tag.ticketsCount}</TableCell>
-                  <TableCell align="center">
-                    <IconButton size="small" onClick={() => handleEditTag(tag)}>
-                      <EditIcon />
-                    </IconButton>
-
-                    <IconButton
-                      size="small"
-                      onClick={(e) => {
-                        setConfirmModalOpen(true);
-                        setDeletingTag(tag);
-                      }}
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell align="center">#</TableCell>
+                <TableCell align="center">
+                  {i18n.t("tags.table.name")}
+                </TableCell>
+                <TableCell align="center">
+                  {i18n.t("tags.table.tickets")}
+                </TableCell>
+                <TableCell align="center">
+                  {i18n.t("tags.table.actions")}
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <Droppable droppableId="droppable">
+              {(provider) => (
+                <TableBody {...provider.droppableProps} ref={provider.innerRef}>
+                  {tags.map((tag, index) => (
+                    <Draggable
+                      key={tag.id}
+                      draggableId={tag?.id?.toString() || ""}
+                      index={index}
                     >
-                      <DeleteOutlineIcon />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))}
-              {loading && <TableRowSkeleton columns={4} />}
-            </>
-          </TableBody>
-        </Table>
+                      {(provided, snapshot) =>
+                        snapshot.isDragging ? (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            style={{
+                              ...provided.draggableProps.style,
+                              backgroundColor: snapshot.isDragging
+                                ? theme.palette.action.selected
+                                : "inherit",
+                            }}
+                          >
+                            <Table size="small">
+                              <TableHead style={{ visibility: "collapse" }}>
+                                <TableRow>
+                                  <TableCell align="center">#</TableCell>
+                                  <TableCell align="center">
+                                    {i18n.t("tags.table.name")}
+                                  </TableCell>
+                                  <TableCell align="center">
+                                    {i18n.t("tags.table.tickets")}
+                                  </TableCell>
+                                  <TableCell align="center">
+                                    {i18n.t("tags.table.actions")}
+                                  </TableCell>
+                                </TableRow>
+                              </TableHead>
+                              <TableBody>
+                                <TableRow>
+                                  <TableCell align="center">
+                                    <DragHandleIcon />
+                                  </TableCell>
+                                  <TableCell align="center">
+                                    <Chip
+                                      variant="outlined"
+                                      style={{
+                                        backgroundColor: tag.color,
+                                        textShadow: "1px 1px 1px #000",
+                                        color: "white",
+                                      }}
+                                      label={tag.name}
+                                      size="small"
+                                    />
+                                  </TableCell>
+                                  <TableCell align="center">
+                                    {tag.ticketsCount}
+                                  </TableCell>
+                                  <TableCell align="center">
+                                    <IconButton
+                                      size="small"
+                                      onClick={() => handleEditTag(tag)}
+                                    >
+                                      <EditIcon />
+                                    </IconButton>
+
+                                    <IconButton
+                                      size="small"
+                                      onClick={(e) => {
+                                        setConfirmModalOpen(true);
+                                        setDeletingTag(tag);
+                                      }}
+                                    >
+                                      <DeleteOutlineIcon />
+                                    </IconButton>
+                                  </TableCell>
+                                </TableRow>
+                              </TableBody>
+                            </Table>
+                          </div>
+                        ) : (
+                          <TableRow
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            style={{
+                              ...provided.draggableProps.style,
+                              backgroundColor: snapshot.isDragging
+                                ? theme.palette.action.selected
+                                : "inherit",
+                            }}
+                          >
+                            <TableCell
+                              align="center"
+                              {...provided.dragHandleProps}
+                            >
+                              <DragHandleIcon />
+                            </TableCell>
+                            <TableCell align="center">
+                              <Chip
+                                variant="outlined"
+                                style={{
+                                  backgroundColor: tag.color,
+                                  textShadow: "1px 1px 1px #000",
+                                  color: "white",
+                                }}
+                                label={tag.name}
+                                size="small"
+                              />
+                            </TableCell>
+                            <TableCell align="center">
+                              {tag.ticketsCount}
+                            </TableCell>
+                            <TableCell align="center">
+                              <IconButton
+                                size="small"
+                                onClick={() => handleEditTag(tag)}
+                              >
+                                <EditIcon />
+                              </IconButton>
+
+                              <IconButton
+                                size="small"
+                                onClick={(e) => {
+                                  setConfirmModalOpen(true);
+                                  setDeletingTag(tag);
+                                }}
+                              >
+                                <DeleteOutlineIcon />
+                              </IconButton>
+                            </TableCell>
+                          </TableRow>
+                        )
+                      }
+                    </Draggable>
+                  ))}
+                  {loading && <TableRowSkeleton columns={4} />}
+                </TableBody>
+              )}
+            </Droppable>
+          </Table>
+        </DragDropContext>
       </Paper>
     </MainContainer>
   );
