@@ -184,7 +184,7 @@ const Quickemessages = () => {
   const handleDeleteQuickemessage = async (quickemessageId) => {
     try {
       await api.delete(`/quick-messages/${quickemessageId}`);
-      toast.success(i18n.t("quickemessages.toasts.deleted"));
+      toast.success(i18n.t("quickMessages.toasts.deleted"));
     } catch (err) {
       toastError(err);
     }
@@ -279,7 +279,7 @@ const Quickemessages = () => {
 
               <TableCell align="center">
                 {i18n.t("quickMessages.table.mediaName")}
-              </TableCell>        
+              </TableCell>
               <TableCell align="center">
                 {i18n.t("quickMessages.table.actions")}
               </TableCell>

@@ -500,26 +500,6 @@ const TicketListItemCustom = ({ ticket }) => {
             </span>
           }
         />
-        <ListItemSecondaryAction>
-          {ticket.lastMessage && (
-            <>
-              <Typography
-                className={classes.lastMessageTime}
-                component="span"
-                variant="body2"
-                color="textSecondary"
-              >
-                {isSameDay(parseISO(ticket.updatedAt), new Date()) ? (
-                  <>{format(parseISO(ticket.updatedAt), "HH:mm")}</>
-                ) : (
-                  <>{format(parseISO(ticket.updatedAt), "dd/MM/yyyy")}</>
-                )}
-              </Typography>
-
-              <br />
-            </>
-          )}
-        </ListItemSecondaryAction>
         <span className={classes.secondaryContentSecond}>
           {ticket.status === "pending" && (
             <ButtonWithSpinner
@@ -586,6 +566,26 @@ const TicketListItemCustom = ({ ticket }) => {
             </ButtonWithSpinner>
           )}
         </span>
+        <ListItemSecondaryAction>
+          {ticket.lastMessage && (
+            <>
+              <Typography
+                className={classes.lastMessageTime}
+                component="span"
+                variant="body2"
+                color="textSecondary"
+              >
+                {isSameDay(parseISO(ticket.updatedAt), new Date()) ? (
+                  <>{format(parseISO(ticket.updatedAt), "HH:mm")}</>
+                ) : (
+                  <>{format(parseISO(ticket.updatedAt), "dd/MM/yyyy")}</>
+                )}
+              </Typography>
+
+              <br />
+            </>
+          )}
+        </ListItemSecondaryAction>
       </ListItem>
 
       <Divider variant="inset" component="li" />
