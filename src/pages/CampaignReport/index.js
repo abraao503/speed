@@ -150,7 +150,7 @@ const CampaignReport = () => {
     <MainContainer>
       <MainHeader>
         <Grid style={{ width: "99.6%" }} container alignItems="center">
-          <Grid xs={12} style={{gap: "5px"}} container alignItems="center">
+          <Grid style={{gap: "5px"}} container alignItems="center">
             <IconButton onClick={() => history.push("/campaigns")}>
               <ArrowLeft color={theme.palette.primary.light} />
             </IconButton>
