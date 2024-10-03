@@ -434,7 +434,7 @@ const MainListItems = (props) => {
                         <ListFeather size={22} />
                       </ListItemIcon>
                       <ListItemText
-                        primary="Listagem"
+                        primary="Visão geral"
                         primaryTypographyProps={{ style: { fontSize: "14px" } }}
                       />
                     </ListItem>
