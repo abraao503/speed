@@ -6,9 +6,8 @@ import Paper from "@material-ui/core/Paper";
 
 import MainContainer from "../../components/MainContainer";
 import MainHeader from "../../components/MainHeader";
-import Title from "../../components/Title";
 
-import { Grid, LinearProgress, Typography } from "@material-ui/core";
+import { Grid, IconButton, LinearProgress, Typography, useTheme } from "@material-ui/core";
 import api from "../../services/api";
 import { has, get, isNull } from "lodash";
 import CardCounter from "../../components/Dashboard/CardCounter";
@@ -23,6 +22,8 @@ import ListAltIcon from "@material-ui/icons/ListAlt";
 import { useDate } from "../../hooks/useDate";
 
 import { SocketContext } from "../../context/Socket/SocketContext";
+import { ArrowLeft } from "react-feather";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const useStyles = makeStyles((theme) => ({
   mainPaper: {
@@ -41,8 +42,9 @@ const useStyles = makeStyles((theme) => ({
 
 const CampaignReport = () => {
   const classes = useStyles();
-
+  const theme = useTheme();
   const { campaignId } = useParams();
+  const history = useHistory();
 
   const [campaign, setCampaign] = useState({});
   const [validContacts, setValidContacts] = useState(0);
@@ -147,9 +149,14 @@ const CampaignReport = () => {
   return (
     <MainContainer>
       <MainHeader>
-        <Grid style={{ width: "99.6%" }} container>
-          <Grid xs={12} item>
-            <Title>Relatório da {campaign.name || "Campanha"}</Title>
+        <Grid style={{ width: "99.6%" }} container alignItems="center">
+          <Grid xs={12} style={{gap: "5px"}} container alignItems="center">
+            <IconButton onClick={() => history.push("/campaigns")}>
+              <ArrowLeft color={theme.palette.primary.light} />
+            </IconButton>
+            <Typography variant="h5" color="primary">
+              Relatório da {campaign.name || "Campanha"}
+            </Typography>
           </Grid>
         </Grid>
       </MainHeader>
