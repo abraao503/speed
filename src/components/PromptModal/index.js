@@ -101,6 +101,7 @@ const PromptModal = ({ open, onClose, promptId }) => {
     maxTokens: 100,
     temperature: 100,
     apiKey: "",
+    assistantId: "",
     queueId: null,
     maxMessages: 10,
   };
@@ -218,31 +219,19 @@ const PromptModal = ({ open, onClose, promptId }) => {
                     }}
                   />
                 </FormControl>
-                <Field
-                  as={TextField}
-                  label={i18n.t("promptModal.form.prompt")}
-                  name="prompt"
-                  error={touched.prompt && Boolean(errors.prompt)}
-                  helperText={touched.prompt && errors.prompt}
-                  variant="outlined"
-                  margin="dense"
-                  fullWidth
-                  rows={10}
-                  multiline={true}
-                />
 
-                <Field
-                  as={TextField}
-                  label={i18n.t("promptModal.form.functions")}
-                  name="functions"
-                  error={touched.functions && Boolean(errors.functions)}
-                  helperText={touched.functions && errors.functions}
-                  variant="outlined"
-                  margin="dense"
-                  fullWidth
-                  rows={10}
-                  multiline={true}
-                />
+                <FormControl fullWidth margin="dense" variant="outlined">
+                  <Field
+                    as={TextField}
+                    label={i18n.t("promptModal.form.assistantId")}
+                    name="assistantId"
+                    error={touched.assistantId && Boolean(errors.assistantId)}
+                    helperText={touched.assistantId && errors.assistantId}
+                    variant="outlined"
+                    margin="dense"
+                    fullWidth
+                  />
+                </FormControl>
 
                 <QueueSelectSingle />
                 <div
