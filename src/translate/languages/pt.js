@@ -241,6 +241,7 @@ const messages = {
           max_messages: "Máximo de mensagens no histórico",
           voiceKey: "Chave da API de Voz",
           voiceRegion: "Região de Voz",
+          assistantId: "ID do Assistente",
         },
         success: "Prompt salvo com sucesso!",
         title: {
