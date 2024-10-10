@@ -35,6 +35,11 @@ import ContactTag from "../ContactTag";
 const useStyles = makeStyles((theme) => ({
   ticket: {
     position: "relative",
+    minHeight: "95px"
+  },
+
+  answeringAvatarPosition: {
+    alignItems: "flex-start",
   },
 
   pendingTicket: {
@@ -365,6 +370,7 @@ const TicketListItemCustom = ({ ticket }) => {
         selected={ticketId && +ticketId === ticket.id}
         className={clsx(classes.ticket, {
           [classes.pendingTicket]: ticket.status === "pending",
+          [classes.answeringAvatarPosition]: ticket.status === "pending"
         })}
       >
         <Tooltip
@@ -381,7 +387,7 @@ const TicketListItemCustom = ({ ticket }) => {
           {ticket.status !== "pending" ? (
             <Avatar
               style={{
-                marginTop: "-20px",
+                marginTop: "-1rem",
                 marginLeft: "-3px",
                 width: "55px",
                 height: "55px",
@@ -392,7 +398,6 @@ const TicketListItemCustom = ({ ticket }) => {
           ) : (
             <Avatar
               style={{
-                marginTop: "-30px",
                 marginLeft: "0px",
                 width: "50px",
                 height: "50px",
@@ -454,7 +459,7 @@ const TicketListItemCustom = ({ ticket }) => {
                       {ticket?.whatsapp?.name?.toUpperCase()}
                     </Badge>
                   ) : (
-                    <br></br>
+                    <></>
                   )}
                   {ticketUser ? (
                     <Badge
@@ -464,7 +469,7 @@ const TicketListItemCustom = ({ ticket }) => {
                       {ticketUser}
                     </Badge>
                   ) : (
-                    <br></br>
+                    <></>
                   )}
                   <Badge
                     style={{
@@ -500,26 +505,6 @@ const TicketListItemCustom = ({ ticket }) => {
             </span>
           }
         />
-        <ListItemSecondaryAction>
-          {ticket.lastMessage && (
-            <>
-              <Typography
-                className={classes.lastMessageTime}
-                component="span"
-                variant="body2"
-                color="textSecondary"
-              >
-                {isSameDay(parseISO(ticket.updatedAt), new Date()) ? (
-                  <>{format(parseISO(ticket.updatedAt), "HH:mm")}</>
-                ) : (
-                  <>{format(parseISO(ticket.updatedAt), "dd/MM/yyyy")}</>
-                )}
-              </Typography>
-
-              <br />
-            </>
-          )}
-        </ListItemSecondaryAction>
         <span className={classes.secondaryContentSecond}>
           {ticket.status === "pending" && (
             <ButtonWithSpinner
@@ -586,6 +571,26 @@ const TicketListItemCustom = ({ ticket }) => {
             </ButtonWithSpinner>
           )}
         </span>
+        <ListItemSecondaryAction>
+          {ticket.lastMessage && (
+            <>
+              <Typography
+                className={classes.lastMessageTime}
+                component="span"
+                variant="body2"
+                color="textSecondary"
+              >
+                {isSameDay(parseISO(ticket.updatedAt), new Date()) ? (
+                  <>{format(parseISO(ticket.updatedAt), "HH:mm")}</>
+                ) : (
+                  <>{format(parseISO(ticket.updatedAt), "dd/MM/yyyy")}</>
+                )}
+              </Typography>
+
+              <br />
+            </>
+          )}
+        </ListItemSecondaryAction>
       </ListItem>
 
       <Divider variant="inset" component="li" />

@@ -245,8 +245,7 @@ const Campaigns = () => {
       <ConfirmationModal
         title={
           deletingCampaign &&
-          `${i18n.t("campaigns.confirmationModal.deleteTitle")} ${
-            deletingCampaign.name
+          `${i18n.t("campaigns.confirmationModal.deleteTitle")} ${deletingCampaign.name
           }?`
         }
         open={confirmModalOpen}
@@ -391,6 +390,7 @@ const Campaigns = () => {
                         history.push(`/campaign/${campaign.id}/report`)
                       }
                       size="small"
+                      disabled={campaign.status !== "FINALIZADA"}
                     >
                       <DescriptionIcon />
                     </IconButton>

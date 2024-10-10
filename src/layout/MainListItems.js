@@ -434,7 +434,7 @@ const MainListItems = (props) => {
                         <ListFeather size={22} />
                       </ListItemIcon>
                       <ListItemText
-                        primary="Listagem"
+                        primary="Visão geral"
                         primaryTypographyProps={{ style: { fontSize: "14px" } }}
                       />
                     </ListItem>
@@ -460,6 +460,7 @@ const MainListItems = (props) => {
                         history.push("/campaigns-config");
                       }}
                       button
+                      dense
                     >
                       <ListItemIcon style={{ minWidth: "40px" }}>
                         <Settings size={22} />
