@@ -158,6 +158,15 @@ const useStyles = makeStyles((theme) => ({
     alignContent: "flex-start",
   },
 
+  tags: {
+    display: "flex",
+    marginTop: 5,
+    alignItems: "flex-start",
+    flexWrap: "wrap",
+    flexDirection: "row",
+    alignContent: "flex-start",
+  },
+
   ticketInfo1: {
     position: "relative",
     top: 13,
@@ -220,9 +229,6 @@ const TicketListItemCustom = ({ ticket }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  {
-    /*CÓDIGO NOVO SAUDAÇÃO*/
-  }
   const handleCloseTicket = async (id) => {
     setTag(ticket?.tags);
     setLoading(true);
@@ -293,8 +299,6 @@ const TicketListItemCustom = ({ ticket }) => {
       setLoading(false);
     }
 
-    // handleChangeTab(null, "tickets");
-    // handleChangeTab(null, "open");
     history.push(`/tickets/${ticket.uuid}`);
   };
 
@@ -313,9 +317,6 @@ const TicketListItemCustom = ({ ticket }) => {
       toastError(err);
     }
   };
-  {
-    /*CÓDIGO NOVO SAUDAÇÃO*/
-  }
 
   const handleSelectTicket = (ticket) => {
     const code = uuidv4();
@@ -496,7 +497,6 @@ const TicketListItemCustom = ({ ticket }) => {
               <span className={classes.contactNameWrapper}>
                 <Typography
                   className={classes.contactLastMessage}
-                  noWrap
                   component="span"
                   variant="body2"
                   color="textSecondary"
@@ -505,9 +505,17 @@ const TicketListItemCustom = ({ ticket }) => {
                   {ticket.lastMessage.includes("data:image/png;base64") ? (
                     <MarkdownWrapper> Localização</MarkdownWrapper>
                   ) : (
-                    <MarkdownWrapper>{ticket.lastMessage}</MarkdownWrapper>
+                    <MarkdownWrapper
+                      style={{
+                        marginBottom: "5px",
+                      }}
+                    >
+                      {ticket.lastMessage.length > 50
+                        ? ticket.lastMessage.substring(0, 50) + "..."
+                        : ticket.lastMessage}
+                    </MarkdownWrapper>
                   )}
-                  <span className={classes.secondaryContentSecond}>
+                  <span className={classes.tags}>
                     {ticket?.whatsapp?.name ? (
                       <Badge className={classes.connectionTag}>
                         {ticket?.whatsapp?.name?.toUpperCase()}
