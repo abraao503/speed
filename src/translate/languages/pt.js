@@ -282,7 +282,7 @@ const messages = {
           number: "Número do Whatsapp",
           email: "Email",
           extraName: "Nome do campo",
-          extraValue: "Valor",
+          extraValue: "Descrição",
           whatsapp: "Conexão Origem: ",
         },
         buttons: {
