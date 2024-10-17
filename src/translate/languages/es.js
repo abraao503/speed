@@ -461,7 +461,7 @@ const messages = {
             chats: "Chat Interno",
             financeiro: "Financiero",
             files: "Lista de archivos",
-            prompts: "Open.Ai",
+            prompts: "SpeedyBot",
             queueIntegration: "Integraciones",
           },
           appBar: {
