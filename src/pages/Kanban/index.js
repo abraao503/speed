@@ -92,7 +92,7 @@ const Kanban = () => {
           id: ticket.id.toString(),
           title: <CardTitle ticket={ticket} userProfile={user.profile} />,
           label: <DeleteButton ticket={ticket} userProfile={user.profile} />,
-          description: <FooterButtons ticket={ticket} />,
+          description: <FooterButtons fetchTickets={fetchTickets} ticket={ticket} />,
           draggable: true,
           href: "/tickets/" + ticket.uuid,
         })),

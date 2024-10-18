@@ -1,6 +1,6 @@
-import { IconButton, makeStyles, Tooltip } from "@material-ui/core";
+import { Badge, IconButton, makeStyles, Tooltip } from "@material-ui/core";
 import React, { useState } from "react";
-import { BookOpen, Calendar } from "react-feather";
+import { BookOpen, Calendar, MessageCircle } from "react-feather";
 import WhatsAppIcon from "@material-ui/icons/WhatsApp";
 import ScheduleModal from "../../ScheduleModal";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
     }
   }));
 
-export default function FooterButtons({ticket}) {
+export default function FooterButtons({ticket, fetchTickets}) {
     const classes = useStyles();
     const color = "#4d4d4d"
     const [scheduleModalOpen, setScheduleModalOpen] = useState(false);
@@ -30,6 +30,7 @@ export default function FooterButtons({ticket}) {
 
     const handleCloseContactNotesModal = () => {
         setContactNotesModal(false)
+        fetchTickets()
     }
 
     const handleCloseScheduleModal = () => {
@@ -46,12 +47,14 @@ export default function FooterButtons({ticket}) {
             <div className={classes.container}>
                 <Tooltip title="Anotações">
                 <IconButton onClick={handleOpenContactNotesModal} size="small">
-                    <BookOpen color={color} size={17} />
+                    <Badge overlap="rectangular" badgeContent={ticket.ticketNotes.length} color="primary" >
+						<BookOpen size={20} />
+					</Badge>
                 </IconButton>
                 </Tooltip>
                 <Tooltip title="Criar agendamento">
                     <IconButton onClick={handleOpenScheduleModal} size="small">
-                        <Calendar color={color} size={17} />
+                        <Calendar color={color} size={20} />
                     </IconButton>
                 </Tooltip>
                 <Tooltip title="Ir para conversa">   
