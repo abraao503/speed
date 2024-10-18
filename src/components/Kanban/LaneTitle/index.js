@@ -3,8 +3,8 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
     kanbanSquare: {
-        width: "1.2rem",
-        height: "1.2rem",
+        width: "15px",
+        height: "15px",
         borderRadius: "5px"
     },
     container: {
