@@ -10,6 +10,12 @@ const useStyles = makeStyles(theme => ({
     container: {
         display: "flex",
         alignItems: "center"
+    },
+    badge: {
+        "& .MuiBadge-badge": {
+            color: theme.mode === "light" ? theme.palette.primary.contrastText : theme.palette.text.primary,
+            backgroundColor: theme.mode === "light" ? theme.palette.primary.light : theme.palette.background.default
+        }
     }
   }));
 
@@ -47,8 +53,8 @@ export default function FooterButtons({ticket, fetchTickets}) {
             <div className={classes.container}>
                 <Tooltip title="Anotações">
                 <IconButton onClick={handleOpenContactNotesModal} size="small">
-                    <Badge overlap="rectangular" badgeContent={ticket.ticketNotes.length} color="primary" >
-						<BookOpen size={20} />
+                    <Badge className={classes.badge} overlap="rectangular" badgeContent={ticket.ticketNotes.length}>
+						<BookOpen color={color} size={20} />
 					</Badge>
                 </IconButton>
                 </Tooltip>
